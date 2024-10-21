@@ -97,7 +97,7 @@ option 82, is one that IPv4 network administrators are generally
 comfortable with.
 
 In IPv6 networks, where hosts may use SLAAC {{RFC4862}} and Privacy
-Addresses {{RFC8191}}, it is quite possible that a host may use
+Addresses {{RFC8191}}, it is quite possible and highly likely that a host may use
 multiple IPv6 addresses over time, possibly changing addresses used
 frequently, or using multiple addresses concurrently.  Where privacy
 addresses are used, a host may choose to generate and start using a
@@ -106,7 +106,7 @@ new privacy address after rebooting.  Clients may use different IPv6
 addresses per application, while servers may have multiple addresses
 configured, one per service offered.
 
-There are many reasons why address stability is desirable, e.g.,  DNS
+There are many reasons why address stability is desirable, e.g., DNS
 mappings, ACLs using IP addresses, and logging.  However, such
 stability may not typically exist in IPv6 client networks,
 particularly where clients are not managed by the network provider, e.g.,
@@ -116,7 +116,6 @@ It is also worth noting that in an IPv4 network, it is more difficult
 for a user to pick and use an address manually without clashing with
 an existing device on the network, while in IPv6 networks picking an
 unused address is simple to do without an address clash.
-
 
 # Address accountability approaches
 
@@ -141,7 +140,6 @@ Protocol (ARP) tables and IPv6 Neighbour Discovery (ND) tables, and
    use at any specific point in time and which addresses are being used
    on which switch ports (and thus users or devices).
 
-
    This is the approach that has been adopted by tools such as
    NAV (https://nav.uninett.no) and Netdot (https://nav.uninett.no), and
    that will be found in many other (open source) tools.  It is sometimes
@@ -151,7 +149,8 @@ Protocol (ARP) tables and IPv6 Neighbour Discovery (ND) tables, and
    where approaches to gather
    the data include SNMP (specifically {{RFC4293}}),
    streaming telemetry (where the collector
-   subscribes to updates/notifications from the device) and using a
+   subscribes to updates/notifications from the device), an Application
+   Programming Interface (API), and using a
    command line interface (CLI, such as ssh).
 
    The downside of this approach is the load that may be placed on
@@ -186,11 +185,11 @@ if a lengthy history is desired.
    One approach to accountability is to attempt to force devices to only
    use DHCPv6, rather than SLAAC, which would in principle give the same address
    accountability model as exists with DHCP for IPv4 today.
-   {{RFC4649}} for DHCPv6 appears to give at least some of the functionality
+   {{RFC4649}} for DHCPv6 appears to give at least some functionality
    of DHCP option 82.
 
    While it is possible to craft IPv6 Router Advertisements that give
-   hints to hosts that DHCPv6 should be used, i.e., the'M' bit is set, there is
+   hints to hosts that DHCPv6 should be used, i.e., the 'M' bit is set, there is
    no obligation on the host to honour that hint.  However, if the
    Autonomous (A) flag in the Prefix Information option is unset (as
    discussed in section 5.5.3 of RFC 4862), the Prefix Information
@@ -200,8 +199,8 @@ if a lengthy history is desired.
 
 Not all common operating systems support DHCPv6 for host addressing,
 Android being the most notable exception. Larger enterprises that are
-enforcing use of DHCPv6 appear to be ones running dual-stack, so in those
-scenarios clients that do not support DHCPv6 will be IPv4-only.
+enforcing use of DHCPv6 appear to be operating dual-stack environments,
+so in those scenarios clients that do not support DHCPv6 will be IPv4-only.
 
 ## Using 802.1X
 
@@ -238,7 +237,8 @@ for providing tethering.
 {{RFC8273}} and {{RFC9663}} describe approaches for devices being assigned
 a prefix rather than an address (potentially of many addresses) for
 their network connectivity. The use of a single prefix per device may
-simplify accountability.
+simplify accountability but may impose an operational cost that some small
+to medium-sized environments cannot justify.
 
 ## Use SAVI mechanisms
 
@@ -277,7 +277,6 @@ In this case the accounting
    network to use it. Such randomisation may have an impact on address
    accountability models.
 
-
 # Conclusions
 
    This text is an initial draft attempting to capture the issues
@@ -293,11 +292,9 @@ In this case the accounting
 
    Feedback on the issues discussed here is welcomed.
 
-
 # Security Considerations
 
 There are no extra security consideration for this document.
-
 
 # IANA Considerations
 
