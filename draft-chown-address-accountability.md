@@ -39,8 +39,6 @@ author:
   code: BS1 6NB
   country: United Kingdom
   email: tim.chown@jisc.ac.uk
-
-author:
 - name: Chris Cummings
   org: ESnet
   street: 
