@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>IPv6 Address Accountability Considerations</title>
+<meta content="Tim Chown" name="author">
+<meta content="Chris Cummings" name="author">
+<meta content="
+       Hosts in IPv4 networks typically acquire addresses by use of DHCP,
+   and retain that address and only that address while the DHCP lease
+   remains valid.  In IPv6 networks, hosts may use DHCPv6, but may
+   instead autoconfigure their own global address(es), and potentially use
+   many privacy addresses over time.  This behaviour places an
+   additional burden on network operators who require address
+   accountability for their users and devices.  There has been some
+   discussion of this issue on various mail lists; this text attempts to
+   capture the issues to encourage further discussion. 
+    " name="description">
+<meta content="xml2rfc 3.23.2" name="generator">
+<meta content="IPv6" name="keyword">
+<meta content="draft-chown-address-accountability-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.23.2
+    Python 3.12.7
+    ConfigArgParse 1.7
+    google-i18n-address 3.1.1
+    intervaltree 3.1.0
+    Jinja2 3.1.4
+    lxml 4.9.4
+    platformdirs 4.3.6
+    pycountry 22.3.5
+    PyYAML 6.0.1
+    requests 2.32.3
+    setuptools 70.3.0
+    wcwidth 0.2.13
+-->
+<link href="draft-chown-address-accountability.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --pilcrow-weak: #ddd;
+  --pilcrow-strong: #bbb;
+  --small-font-size: 14.5px;
+  --font-mono: 'Oxygen Mono', monospace;
+  scrollbar-color: #bbb #eee;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Cabin Condensed", sans-serif;
+  font-weight: 600;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+h1#title {
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1#title, h1#rfcnum {
+  margin: 1.5em 0 0.2em;
+}
+h1#rfcnum + h1#title {
+  margin: 0.2em 0;
+}
+
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 27px;
+}
+h4, h5, h6 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+}
+#abstract+p {
+  font-size: 18px;
+  line-height: 24px;
+}
+#abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 16px;
+  line-height: 0;
+}
+
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+/* font-family isn't space-separated, but =~ will have to do */
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 0.5em 2em;
+}
+:is(ol, ul) :is(ol, ul) {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+:is(ul, ol).compact, .ulCompact, .olCompact {
+  line-height: 1;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+  clear: left;
+  --indent: 3ch;
+  /* --indent: attr(indent ch); not supported in any browser, but we can dream */
+}
+dl.olPercent {
+  --indent: 5ch;
+}
+dl > dt {
+  float: left;
+  margin-right: 2ch;
+  min-width: 8ch;
+}
+dl.dlNewline > dt {
+  float: none;
+}
+dl > dd {
+  margin-bottom: .8em;
+  margin-left: var(--indent) !important; /* stupid element overrides */
+  min-height: 2ex;
+}
+dl.olPercent > dt {
+  min-width: calc(var(--indent) - 2ch);
+}
+:is(dl.compact, .dlCompact) > dd {
+  margin-bottom: 0;
+}
+:is(dl.compact, .dlCompact) > dd > :is(:first-child, .break:first-child + *) {
+  margin-top: 0;
+}
+:is(dl.compact, .dlCompact) > dd > :is(:last-child) {
+  margin-bottom: 0;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+}
+:is(dd, span).break {
+  display: none;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href].selfRef, .iref + a[href].internal {
+  color: var(--text-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px var(--font-mono);
+}
+tt, code {
+  /* changing the font for inline elements leads to different ascender
+     and descender heights; as we want to retain baseline alignment,
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
+  line-height: 0;
+}
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+  padding: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+}
+@media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) p {
+    margin: -2px 0;
+    max-height: 0;
+    transition: max-height 2s ease, margin 0.5s ease 0.5s;
+    overflow: hidden;
+  }
+  :is(#status-of-memo, #copyright):hover p,
+  :is(#status-of-memo, #copyright) h2:target ~ p {
+    margin: 0.5em 0;
+    max-height: 500px;
+    overflow: auto;
+  }
+  pre, svg {
+    display: inline-block;
+    overflow-x: auto;
+  }
+  pre {
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  :is(pre, svg) + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  max-width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+}
+table.right {
+  margin-left: auto;
+}
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+table.left {
+  margin-right: auto;
+}
+thead, tbody {
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+th {
+  background-color: var(--line-color);
+}
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
+  background-color: var(--background-color);
+}
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
+  background-color: var(--highlight-color);
+}
+table caption {
+  margin: 0;
+  padding: 3px 0 3px 1em;
+}
+table p {
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  opacity: 0.2;
+  user-select: none;
+}
+a.pilcrow[href] { color: var(--pilcrow-weak); }
+a.pilcrow[href]:hover { text-decoration: none; }
+@media not print {
+  :hover > a.pilcrow {
+    opacity: 1;
+  }
+  a.pilcrow[href]:hover {
+    color: var(--pilcrow-strong);
+    background-color: transparent;
+  }
+}
+@media print {
+  a.pilcrow {
+    display: none;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: 600;
+  font-size: var(--small-font-size);
+}
+.role {
+  font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 15ch;
+}
+#identifiers dt {
+  width: var(--identifier-width);
+  min-width: var(--identifier-width);
+  clear: left;
+  float: left;
+  text-align: right;
+  margin-right: 1ch;
+}
+#identifiers dd {
+  margin: 0;
+  margin-left: calc(1em + var(--identifier-width)) !important;
+  min-width: 5em;
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+#toc nav ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+#toc nav li {
+  line-height: 1.3em;
+  margin: 2px 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+#toc a.xref {
+  white-space: normal;
+}
+/* references */
+.references dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 10ch;
+  margin-right: 1.5ch;
+}
+.references dt:target::before {
+  content: "⇒";
+  width: 15px;
+  margin: 0 10px 0 -25px;
+}
+.references dd {
+  margin-left: 12ch !important;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.references .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+#rfc\.index\.index + ul {
+  margin-left: 0;
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses > section {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #authors-addresses > section > h2 {
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+    break-inside: avoid-column;
+  }
+}
+
+.rfcEditorRemove p:first-of-type {
+  font-style: italic;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 1px 0 0 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+  }
+  #toc.active {
+      opacity: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { /* css hamburger */
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 8px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active nav {
+    display: block;
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:link,
+  #toc h2 a:focus,
+  #toc h2 a:hover,
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin-top: 2px;
+  }
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  #toc nav > ul  {
+    margin-bottom: 2em;
+  }
+  #toc ul {
+    margin: 0 0 0 4px;
+    font-size: var(--small-font-size);
+  }
+  #toc ul :is(p, li) {
+    margin: 2px 0;
+    line-height: 22px;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre, .vcard {
+    page-break-inside: avoid;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  :is(h2, h3, h4, h5, h6)+*, dd {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+  .toplink {
+    display: none;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Changes introduced to fix issues found during implementation */
+
+/* Separate body from document info even without intervening H1 */
+section {
+  clear: both;
+}
+
+/* Top align author divs, to avoid names without organization dropping level with org names */
+.author {
+  vertical-align: top;
+}
+
+/* Style section numbers with more space between number and title */
+.section-number {
+  padding-right: 0.5em;
+}
+
+/* Add styling for a link in the ToC that points to the top of the document */
+a.toplink {
+  float: right;
+  margin: 8px 0.5em 0;
+}
+
+/* Provide styling for table cell text alignment */
+table .text-left {
+  text-align: left;
+}
+table .text-center {
+  text-align: center;
+}
+table .text-right {
+  text-align: right;
+}
+
+/* Make the alternative author contact information look less like just another
+   author, and group it closer with the primary author contact information */
+.alternative-contact {
+  margin: 0.5em 0 0.25em 0;
+}
+address .non-ascii {
+  margin: 0 0 0 2em;
+}
+
+/* With it being possible to set tables with alignment
+  left, center, and right, { width: 100%; } does not make sense */
+table {
+  width: auto;
+}
+
+/* Avoid reference text that sits in a block with very wide left margin,
+   because of a long floating dt label.*/
+.references dd {
+  overflow: visible;
+}
+
+/* Control caption placement */
+caption {
+  caption-side: bottom;
+}
+
+/* Limit the width of the author address vcard, so names in right-to-left
+   script don't end up on the other side of the page. */
+
+address.vcard {
+  max-width: 20em;
+  margin-right: auto;
+}
+
+/* For address alignment dependent on LTR or RTL scripts */
+address div.left {
+  text-align: left;
+}
+address div.right {
+  text-align: right;
+}
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+:root {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg :is([stroke="black"], [stroke^="#000"]) {
+  stroke: var(--text-color);
+}
+svg :is([stroke="white"], [stroke^="#fff"]) {
+  stroke: var(--background-color);
+}
+svg :is([fill="black"], [fill^="#000"], :not([fill])) {
+  fill: var(--text-color);
+}
+svg :is([fill="white"], [fill^="#fff"]) {
+  fill: var(--background-color);
+}
+</style>
+
+</head>
+<body class="xml2rfc">
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">IPv6 Address Accountability Consideratio</td>
+<td class="right">October 2024</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Chown &amp; Cummings</td>
+<td class="center">Expires 24 April 2025</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">IPv6 Operations</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-chown-address-accountability-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2024-10-21" class="published">21 October 2024</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2025-04-24">24 April 2025</time></dd>
+<dt class="label-authors">Authors:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">T. Chown</div>
+<div class="org">Jisc</div>
+</div>
+<div class="author">
+      <div class="author-name">C. Cummings</div>
+<div class="org">ESnet</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">IPv6 Address Accountability Considerations</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">Hosts in IPv4 networks typically acquire addresses by use of DHCP,
+   and retain that address and only that address while the DHCP lease
+   remains valid.  In IPv6 networks, hosts may use DHCPv6, but may
+   instead autoconfigure their own global address(es), and potentially use
+   many privacy addresses over time.  This behaviour places an
+   additional burden on network operators who require address
+   accountability for their users and devices.  There has been some
+   discussion of this issue on various mail lists; this text attempts to
+   capture the issues to encourage further discussion.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+</section>
+<section class="note rfcEditorRemove" id="section-note.1">
+      <h2 id="name-about-this-document">
+<a href="#name-about-this-document" class="section-name selfRef">About This Document</a>
+      </h2>
+<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
+<p id="section-note.1-2">
+        The latest revision of this draft can be found at <span><a href="https://timchown.github.io/address-accountability/draft-chown-address-accountability.html">https://timchown.github.io/address-accountability/draft-chown-address-accountability.html</a></span>.
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-chown-address-accountability/">https://datatracker.ietf.org/doc/draft-chown-address-accountability/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+<p id="section-note.1-3">
+        Discussion of this document takes place on the
+        IPv6 Operations Working Group mailing list (<span><a href="mailto:v6ops@ietf.org">mailto:v6ops@ietf.org</a></span>),
+        which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/v6ops/">https://mailarchive.ietf.org/arch/browse/v6ops/</a></span>.
+        Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/v6ops/">https://www.ietf.org/mailman/listinfo/v6ops/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+<p id="section-note.1-4">Source for this draft and an issue tracker can be found at
+        <span><a href="https://github.com/timchown/address-accountability">https://github.com/timchown/address-accountability</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 24 April 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2024 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-address-accountability-appr" class="internal xref">Address accountability approaches</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-switch-router-polling" class="internal xref">Switch-router polling</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1" class="keepWithNext"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-record-all-nd-traffic" class="internal xref">Record all ND traffic</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-force-use-of-dhcpv6-only" class="internal xref">Force use of DHCPv6 only</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4">
+                <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="auto internal xref">2.4</a>.  <a href="#name-using-8021x" class="internal xref">Using 802.1X</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.5">
+                <p id="section-toc.1-1.2.2.5.1"><a href="#section-2.5" class="auto internal xref">2.5</a>.  <a href="#name-use-a-host-based-registrati" class="internal xref">Use a host-based registration protocol</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.6">
+                <p id="section-toc.1-1.2.2.6.1"><a href="#section-2.6" class="auto internal xref">2.6</a>.  <a href="#name-using-a-prefix-per-host" class="internal xref">Using a prefix per host</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.7">
+                <p id="section-toc.1-1.2.2.7.1"><a href="#section-2.7" class="auto internal xref">2.7</a>.  <a href="#name-use-savi-mechanisms" class="internal xref">Use SAVI mechanisms</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-privacy-considerations" class="internal xref">Privacy Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-conclusions" class="internal xref">Conclusions</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref"></a><a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref"></a><a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref"></a><a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">Administrators of IPv4 networks are used to an address accountability
+model where devices acquire a single IPv4 address using DHCP <span>[<a href="#RFC2131" class="cite xref">RFC2131</a>]</span>
+and then use that address while the DHCP lease is valid.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">The IPv4 address may be a global address, or a private address <span>[<a href="#RFC1918" class="cite xref">RFC1918</a>]</span>
+used in conjunction with Network Address Translation (NAT) <span>[<a href="#RFC2663" class="cite xref">RFC2663</a>]</span>.
+The address obtained by DHCP is typically tied to a specific device
+MAC address.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">This model allows an administrator to track back an IP address to a user or
+device, in the event of some incident or fault requiring investigation.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">While by no means foolproof, this model, which may include use of DHCP
+option 82, is one that IPv4 network administrators are generally
+comfortable with.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">In IPv6 networks, where hosts may use SLAAC <span>[<a href="#RFC4862" class="cite xref">RFC4862</a>]</span> and Privacy
+Addresses <span>[<a href="#RFC8191" class="cite xref">RFC8191</a>]</span>, it is quite possible that a host may use
+multiple IPv6 addresses over time, possibly changing addresses used
+frequently, or using multiple addresses concurrently.  Where privacy
+addresses are used, a host may choose to generate and start using a
+new privacy address at any time, and will also typically generate a
+new privacy address after rebooting.  Clients may use different IPv6
+addresses per application, while servers may have multiple addresses
+configured, one per service offered.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">There are many reasons why address stability is desirable, e.g.,  DNS
+mappings, ACLs using IP addresses, and logging.  However, such
+stability may not typically exist in IPv6 client networks,
+particularly where clients are not managed by the network provider, e.g.,
+in campus 'Bring Your Own Device' (BYOD) deployments.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-1-7">It is also worth noting that in an IPv4 network, it is more difficult
+for a user to pick and use an address manually without clashing with
+an existing device on the network, while in IPv6 networks picking an
+unused address is simple to do without an address clash.<a href="#section-1-7" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="address-accountability-approaches">
+<section id="section-2">
+      <h2 id="name-address-accountability-appr">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-address-accountability-appr" class="section-name selfRef">Address accountability approaches</a>
+      </h2>
+<p id="section-2-1">The issue of address accountability for IPv6 networks, and thus also
+for dual-stack IPv4-IPv6 networks, is one that has been raised many
+times in various discussion fora. This document attempts to capture
+the various solutions proposed, noting the advantages and disadvantages
+of each approach.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">At this stage of the draft's evolution, no single approach is recommended.
+The best solution may vary depending on the scenario and tools available.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<p id="section-2-3">The existing approaches to address accountability fall into the
+following categories.<a href="#section-2-3" class="pilcrow">¶</a></p>
+<div id="switch-router-polling">
+<section id="section-2.1">
+        <h3 id="name-switch-router-polling">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-switch-router-polling" class="section-name selfRef">Switch-router polling</a>
+        </h3>
+<p id="section-2.1-1">By polling network switch and router devices for IPv4 Address Resolution
+Protocol (ARP) tables and IPv6 Neighbour Discovery (ND) tables, and
+   correlating the results with switch port MAC
+   tables, it should be possible to determine which IP addresses are in
+   use at any specific point in time and which addresses are being used
+   on which switch ports (and thus users or devices).<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">This is the approach that has been adopted by tools such as
+   NAV (https://nav.uninett.no) and Netdot (https://nav.uninett.no), and
+   that will be found in many other (open source) tools.  It is sometimes
+   referred to as "ND cache scraping".<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.1-3">Such scraping is mentioned in <span>[<a href="#RFC9099" class="cite xref">RFC9099</a>]</span>, Section 2.6.1.4,
+   where approaches to gather
+   the data include SNMP (specifically <span>[<a href="#RFC4293" class="cite xref">RFC4293</a>]</span>),
+   streaming telemetry (where the collector
+   subscribes to updates/notifications from the device) and using a
+   command line interface (CLI, such as ssh).<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">The downside of this approach is the load that may be placed on
+   devices by frequent Simple Network Management Protocol (SNMP)
+   or other polling. The polling frequency
+   needs to be rapid enough to ensure that cached ND/ARP data on devices
+   is not expired between polling intervals, i.e., the ND/ARP data should
+   not be expired more frequently than the device is polled. RFC 9099
+   suggests this period may be as low as 30 seconds.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="record-all-nd-traffic">
+<section id="section-2.2">
+        <h3 id="name-record-all-nd-traffic">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-record-all-nd-traffic" class="section-name selfRef">Record all ND traffic</a>
+        </h3>
+<p id="section-2.2-1">If all ND traffic observed on a link can be captured, it should be
+   possible for IPv6 address usage to be recorded.  This would require
+   appropriate capability on a device on any given subnet, e.g. as is
+   currently achieved for RAmond (https://ramond.sourceforge.net)
+   or NDPmon (https://sourceforge.net/projects/ndpmon), or a reporting
+   mechanism for the subnet router, such as syslog.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-2">There may also be mechanisms such as a (filtered)
+   Remote Switch Port Analyser (RSPAN) that may be suitable.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2-3">A benefit of this approach is that collecting all ND traffic would
+   allow additional accounting and fault detection to be undertaken,
+   e.g. rogue RA detection, or DAD DoS detection.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
+<p id="section-2.2-4">The downside may be the significant volume of traffic to be held,
+if a lengthy history is desired.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="force-use-of-dhcpv6-only">
+<section id="section-2.3">
+        <h3 id="name-force-use-of-dhcpv6-only">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-force-use-of-dhcpv6-only" class="section-name selfRef">Force use of DHCPv6 only</a>
+        </h3>
+<p id="section-2.3-1">One approach to accountability is to attempt to force devices to only
+   use DHCPv6, rather than SLAAC, which would in principle give the same address
+   accountability model as exists with DHCP for IPv4 today.
+   <span>[<a href="#RFC4649" class="cite xref">RFC4649</a>]</span> for DHCPv6 appears to give at least some of the functionality
+   of DHCP option 82.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3-2">While it is possible to craft IPv6 Router Advertisements that give
+   hints to hosts that DHCPv6 should be used, i.e., the'M' bit is set, there is
+   no obligation on the host to honour that hint.  However, if the
+   Autonomous (A) flag in the Prefix Information option is unset (as
+   discussed in section 5.5.3 of RFC 4862), the Prefix Information
+   option should be ignored.  In such cases a user running the device will need to
+   determine the on-link prefix if they wish to manually configure their
+   own address.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
+<p id="section-2.3-3">Not all common operating systems support DHCPv6 for host addressing,
+Android being the most notable exception. Larger enterprises that are
+enforcing use of DHCPv6 appear to be ones running dual-stack, so in those
+scenarios clients that do not support DHCPv6 will be IPv4-only.<a href="#section-2.3-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="using-8021x">
+<section id="section-2.4">
+        <h3 id="name-using-8021x">
+<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-using-8021x" class="section-name selfRef">Using 802.1X</a>
+        </h3>
+<p id="section-2.4-1">It is now quite common practice for research and education sites -
+university or college campuses and research organisations - to use 802.1X
+for network authentication as part of the international
+eduroam <span>[<a href="#RFC7593" class="cite xref">RFC7593</a>]</span> (https://www.eduroam.org) federated authentication system, as
+deployed at thousands of educational sites across over 70 countries.
+Use of 802.1X gives the network operator knowledge about their own users
+authenticating, but would require coordination with remote peers for
+details of visiting users admitted via eduroam.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
+<p id="section-2.4-2">802.1X can also be used for wired network access control.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="use-a-host-based-registration-protocol">
+<section id="section-2.5">
+        <h3 id="name-use-a-host-based-registrati">
+<a href="#section-2.5" class="section-number selfRef">2.5. </a><a href="#name-use-a-host-based-registrati" class="section-name selfRef">Use a host-based registration protocol</a>
+        </h3>
+<p id="section-2.5-1">A current I-D, <span>[<a href="#I-D.ietf-dhc-addr-notification" class="cite xref">I-D.ietf-dhc-addr-notification</a>]</span>, presents a
+mechanism for hosts to opt in to registering
+their self-generated or statically-configured addresses to a DHCPv6
+server.<a href="#section-2.5-1" class="pilcrow">¶</a></p>
+<p id="section-2.5-2">While it's an opt-in mechanism, it may be enough in some use cases, e.g.,
+when the enterprise controls the devices that can connect to the network.<a href="#section-2.5-2" class="pilcrow">¶</a></p>
+<p id="section-2.5-3">There is a consideration for address lifetimes when using this approach.<a href="#section-2.5-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="using-a-prefix-per-host">
+<section id="section-2.6">
+        <h3 id="name-using-a-prefix-per-host">
+<a href="#section-2.6" class="section-number selfRef">2.6. </a><a href="#name-using-a-prefix-per-host" class="section-name selfRef">Using a prefix per host</a>
+        </h3>
+<p id="section-2.6-1">By using a prefix per host, the accountability model shifts from
+identifying address(es) used by a host, to the prefix from which it
+is using addresses, whether for itself (e.g., for containers) or
+for providing tethering.<a href="#section-2.6-1" class="pilcrow">¶</a></p>
+<p id="section-2.6-2"><span>[<a href="#RFC8273" class="cite xref">RFC8273</a>]</span> and <span>[<a href="#RFC9663" class="cite xref">RFC9663</a>]</span> describe approaches for devices being assigned
+a prefix rather than an address (potentially of many addresses) for
+their network connectivity. The use of a single prefix per device may
+simplify accountability.<a href="#section-2.6-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="use-savi-mechanisms">
+<section id="section-2.7">
+        <h3 id="name-use-savi-mechanisms">
+<a href="#section-2.7" class="section-number selfRef">2.7. </a><a href="#name-use-savi-mechanisms" class="section-name selfRef">Use SAVI mechanisms</a>
+        </h3>
+<p id="section-2.7-1">The FCFS SAVI: First-Come, First-Served Source Address Validation
+Improvement for Locally Assigned IPv6 Addresses approach could be used
+as defined in <span>[<a href="#RFC6620" class="cite xref">RFC6620</a>]</span>.<a href="#section-2.7-1" class="pilcrow">¶</a></p>
+<p id="section-2.7-2">In this case the accounting<a href="#section-2.7-2" class="pilcrow">¶</a></p>
+<p id="section-2.7-3">Discussion of appropriateness of SAVI mechanisms to be added here.
+   (In principle, SAVI mechanisms work by observing NDP and DHCP
+   messages, allowing bindings to be set up and recorded.)<a href="#section-2.7-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="privacy-considerations">
+<section id="section-3">
+      <h2 id="name-privacy-considerations">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
+      </h2>
+<p id="section-3-1">This draft discusses mechanisms for a site or organisation to manage
+   address accountability where IPv6 has been deployed.  In most
+   networks there is a requirement to be able to identify which users
+   have been using which addresses or devices at a given point in time.
+   This draft was written in response to requests for improved
+   accountability for IPv6 traffic in university campus sites, but
+   the same rationale is likely to apply elsewhere.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">While the sources of data that may be used for such purposes (e.g.,
+   state on routers or switches) is generally not available to general
+   users of the network, it is available to administrators of the
+   network.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<p id="section-3-3">The use of privacy mechanisms, e.g.,  RFC 8191, gives the
+   greatest benefit when the addresses are being observed by external
+   third parties.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-4">The introduction of randomised MAC addresses for devices is designed
+   to be privacy-enhancing for users, whether used only in the probing
+   messages when seeking to join a network, or for associating to a
+   network to use it. Such randomisation may have an impact on address
+   accountability models.<a href="#section-3-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="conclusions">
+<section id="section-4">
+      <h2 id="name-conclusions">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-conclusions" class="section-name selfRef">Conclusions</a>
+      </h2>
+<p id="section-4-1">This text is an initial draft attempting to capture the issues
+   related to IPv6 address accountability models.  If an all-DHCPv6
+   model is not viable, IPv6 network administrators will need to deploy
+   management and monitoring tools to allow them to account for hosts
+   that will have multiple IPv6 addresses that may also change rapidly
+   over time.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">Some of the approaches described do not depend on a specific type of
+   address management being used, and will thus work with other
+   addressing methods if they emerge in the future.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">Feedback on the issues discussed here is welcomed.<a href="#section-4-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="security-considerations">
+<section id="section-5">
+      <h2 id="name-security-considerations">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-5-1">There are no extra security consideration for this document.<a href="#section-5-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="iana-considerations">
+<section id="section-6">
+      <h2 id="name-iana-considerations">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<p id="section-6-1">This document has no IANA actions.<a href="#section-6-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="acknowledgments">
+<section id="section-7">
+      <h2 id="name-acknowledgments">
+<a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      </h2>
+<p id="section-7-1">The author would like to thank the following people for comments on and
+suggestions for this text:
+Dale Carder, Lorenzo Colitti, Mark Smith, and James Woodyatt.<a href="#section-7-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="sec-combined-references">
+<section id="section-8">
+      <h2 id="name-references">
+<a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<div id="sec-normative-references">
+<section id="section-8.1">
+        <h3 id="name-normative-references">
+<a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
+<dl class="references">
+<dt id="I-D.ietf-dhc-addr-notification">[I-D.ietf-dhc-addr-notification]</dt>
+        <dd>
+<span class="refAuthor">Kumari, W. A.</span>, <span class="refAuthor">Krishnan, S.</span>, <span class="refAuthor">Asati, R.</span>, <span class="refAuthor">Colitti, L.</span>, <span class="refAuthor">Linkova, J.</span>, and <span class="refAuthor">S. Jiang</span>, <span class="refTitle">"Registering Self-generated IPv6 Addresses using DHCPv6"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-dhc-addr-notification-13</span>, <time datetime="2024-05-16" class="refDate">16 May 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-dhc-addr-notification-13">https://datatracker.ietf.org/doc/html/draft-ietf-dhc-addr-notification-13</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC1918">[RFC1918]</dt>
+        <dd>
+<span class="refAuthor">Rekhter, Y.</span>, <span class="refAuthor">Moskowitz, B.</span>, <span class="refAuthor">Karrenberg, D.</span>, <span class="refAuthor">de Groot, G. J.</span>, and <span class="refAuthor">E. Lear</span>, <span class="refTitle">"Address Allocation for Private Internets"</span>, <span class="seriesInfo">BCP 5</span>, <span class="seriesInfo">RFC 1918</span>, <span class="seriesInfo">DOI 10.17487/RFC1918</span>, <time datetime="1996-02" class="refDate">February 1996</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc1918">https://www.rfc-editor.org/rfc/rfc1918</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC2131">[RFC2131]</dt>
+        <dd>
+<span class="refAuthor">Droms, R.</span>, <span class="refTitle">"Dynamic Host Configuration Protocol"</span>, <span class="seriesInfo">RFC 2131</span>, <span class="seriesInfo">DOI 10.17487/RFC2131</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2131">https://www.rfc-editor.org/rfc/rfc2131</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4293">[RFC4293]</dt>
+        <dd>
+<span class="refAuthor">Routhier, S., Ed.</span>, <span class="refTitle">"Management Information Base for the Internet Protocol (IP)"</span>, <span class="seriesInfo">RFC 4293</span>, <span class="seriesInfo">DOI 10.17487/RFC4293</span>, <time datetime="2006-04" class="refDate">April 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4293">https://www.rfc-editor.org/rfc/rfc4293</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4649">[RFC4649]</dt>
+        <dd>
+<span class="refAuthor">Volz, B.</span>, <span class="refTitle">"Dynamic Host Configuration Protocol for IPv6 (DHCPv6) Relay Agent Remote-ID Option"</span>, <span class="seriesInfo">RFC 4649</span>, <span class="seriesInfo">DOI 10.17487/RFC4649</span>, <time datetime="2006-08" class="refDate">August 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4649">https://www.rfc-editor.org/rfc/rfc4649</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4862">[RFC4862]</dt>
+        <dd>
+<span class="refAuthor">Thomson, S.</span>, <span class="refAuthor">Narten, T.</span>, and <span class="refAuthor">T. Jinmei</span>, <span class="refTitle">"IPv6 Stateless Address Autoconfiguration"</span>, <span class="seriesInfo">RFC 4862</span>, <span class="seriesInfo">DOI 10.17487/RFC4862</span>, <time datetime="2007-09" class="refDate">September 2007</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4862">https://www.rfc-editor.org/rfc/rfc4862</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6620">[RFC6620]</dt>
+        <dd>
+<span class="refAuthor">Nordmark, E.</span>, <span class="refAuthor">Bagnulo, M.</span>, and <span class="refAuthor">E. Levy-Abegnoli</span>, <span class="refTitle">"FCFS SAVI: First-Come, First-Served Source Address Validation Improvement for Locally Assigned IPv6 Addresses"</span>, <span class="seriesInfo">RFC 6620</span>, <span class="seriesInfo">DOI 10.17487/RFC6620</span>, <time datetime="2012-05" class="refDate">May 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6620">https://www.rfc-editor.org/rfc/rfc6620</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8191">[RFC8191]</dt>
+        <dd>
+<span class="refAuthor">Yan, Z.</span>, <span class="refAuthor">Lee, J.</span>, and <span class="refAuthor">X. Lee</span>, <span class="refTitle">"Home Network Prefix Renumbering in Proxy Mobile IPv6 (PMIPv6)"</span>, <span class="seriesInfo">RFC 8191</span>, <span class="seriesInfo">DOI 10.17487/RFC8191</span>, <time datetime="2017-08" class="refDate">August 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8191">https://www.rfc-editor.org/rfc/rfc8191</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9099">[RFC9099]</dt>
+      <dd>
+<span class="refAuthor">Vyncke, É.</span>, <span class="refAuthor">Chittimaneni, K.</span>, <span class="refAuthor">Kaeo, M.</span>, and <span class="refAuthor">E. Rey</span>, <span class="refTitle">"Operational Security Considerations for IPv6 Networks"</span>, <span class="seriesInfo">RFC 9099</span>, <span class="seriesInfo">DOI 10.17487/RFC9099</span>, <time datetime="2021-08" class="refDate">August 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9099">https://www.rfc-editor.org/rfc/rfc9099</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-8.2">
+        <h3 id="name-informative-references">
+<a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC2663">[RFC2663]</dt>
+        <dd>
+<span class="refAuthor">Srisuresh, P.</span> and <span class="refAuthor">M. Holdrege</span>, <span class="refTitle">"IP Network Address Translator (NAT) Terminology and Considerations"</span>, <span class="seriesInfo">RFC 2663</span>, <span class="seriesInfo">DOI 10.17487/RFC2663</span>, <time datetime="1999-08" class="refDate">August 1999</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2663">https://www.rfc-editor.org/rfc/rfc2663</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7593">[RFC7593]</dt>
+        <dd>
+<span class="refAuthor">Wierenga, K.</span>, <span class="refAuthor">Winter, S.</span>, and <span class="refAuthor">T. Wolniewicz</span>, <span class="refTitle">"The eduroam Architecture for Network Roaming"</span>, <span class="seriesInfo">RFC 7593</span>, <span class="seriesInfo">DOI 10.17487/RFC7593</span>, <time datetime="2015-09" class="refDate">September 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7593">https://www.rfc-editor.org/rfc/rfc7593</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8273">[RFC8273]</dt>
+        <dd>
+<span class="refAuthor">Brzozowski, J.</span> and <span class="refAuthor">G. Van de Velde</span>, <span class="refTitle">"Unique IPv6 Prefix per Host"</span>, <span class="seriesInfo">RFC 8273</span>, <span class="seriesInfo">DOI 10.17487/RFC8273</span>, <time datetime="2017-12" class="refDate">December 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8273">https://www.rfc-editor.org/rfc/rfc8273</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9663">[RFC9663]</dt>
+      <dd>
+<span class="refAuthor">Colitti, L.</span>, <span class="refAuthor">Linkova, J., Ed.</span>, and <span class="refAuthor">X. Ma, Ed.</span>, <span class="refTitle">"Using DHCPv6 Prefix Delegation (DHCPv6-PD) to Allocate Unique IPv6 Prefixes per Client in Large Broadcast Networks"</span>, <span class="seriesInfo">RFC 9663</span>, <span class="seriesInfo">DOI 10.17487/RFC9663</span>, <time datetime="2024-10" class="refDate">October 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9663">https://www.rfc-editor.org/rfc/rfc9663</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-A">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Tim Chown</span></div>
+<div dir="auto" class="left"><span class="org">Jisc</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:Tim.Chown@jisc.ac.uk" class="email">Tim.Chown@jisc.ac.uk</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Chris Cummings</span></div>
+<div dir="auto" class="left"><span class="org">ESnet</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:chriscummings@es.net" class="email">chriscummings@es.net</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>
