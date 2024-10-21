@@ -47,15 +47,16 @@ normative:
   RFC4649:
   RFC4862:
   RFC8191:
-
 informative:
   RFC2663:
-
 NAV:
   target: https://nav.uninett.no
+  title: Network Automation Virtualised
+  author: 
 Netdot:
   target: https://github.com/cvicente/Netdot
-
+  title: Network Documentation Tool
+  author: 
 
 --- abstract
 
@@ -90,7 +91,7 @@ option 82, is one that IPv4 network administrators are generally
 comfortable with.
 
 In IPv6 networks, where hosts may use SLAAC {{RFC4862}} and Privacy
-Addresses {{RFC8991}}, it is quite possible that a host may use
+Addresses {{RFC8191}}, it is quite possible that a host may use
 multiple IPv6 addresses over time, possibly changing addresses used
 frequently, or using multiple addresses concurrently.  Where privacy
 addresses are used, a host may choose to generate and start using a
