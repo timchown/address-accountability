@@ -47,6 +47,7 @@ normative:
   RFC4649:
   RFC4862:
   RFC8191:
+  draft-ietf-dhc-addr-notification:
 informative:
   RFC2663:
 
@@ -129,7 +130,8 @@ Protocol (ARP) tables and IPv6 Neighbour Discovery (ND) tables, and
 
    This is the approach that has been adopted by tools such as 
    NAV (https://nav.uninett.no) and Netdot (https://nav.uninett.no), and 
-   that will be found in many other (open source) tools.
+   that will be found in many other (open source) tools.  It is sometimes
+   referred to as "ND cache scraping".
 
    The downside of this approach is the load that may be placed on
    devices by frequent Simple Network Management Protocol (SNMP) 
@@ -160,7 +162,7 @@ if a lengthy history is desired.
 ## Force use of DHCPv6 only
 
    One approach to accountability is to attempt to force devices to only
-   use DHCPv6, which would in principle give the same address
+   use DHCPv6, rather than SLAAC, which would in principle give the same address
    accountability model as exists for IPv4 today. {{RFC4649}} for DHCPv6
    appears to give at least some of the functionality of DHCP option 82.
 
@@ -172,6 +174,16 @@ if a lengthy history is desired.
    option should be ignored.  A user running the device will need to
    determine the on-link prefix if they wish to manually configure their
    own address.
+
+Not all common operating systems support DHCPv6 for host addressing,
+Android being the most notable exception.
+
+## Use a host-based registration protocol
+
+A current I-D, draft-ietf-dhc-addr-notification, presents a 
+mechanism for hosts to opt-ion to registering 
+their self-generated or statically-configured addresses to a DHCPv6
+server.
 
 ## Use SAVI mechanisms
 
