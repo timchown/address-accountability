@@ -40,7 +40,7 @@ author:
       -
         ins: C. Cummings
         name: Chris Cummings
-        org: ESnet
+        org: Energy Sciences Network
         email: chriscummings@es.net
 
 normative:
