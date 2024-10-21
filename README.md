@@ -1,11 +1,11 @@
-# TODO - Your title
+# IPv6 Address Accountability Considerations
 
-This is the working area for the individual Internet-Draft, "TODO - Your title".
+This is the working area for the individual Internet-Draft, "IPv6 Address Accountability Considerations".
 
-* [Editor's Copy](https://timchown.github.io/address-accountability/#go.draft-chown-address-accountability.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-chown-address-accountability)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-chown-address-accountability)
-* [Compare Editor's Copy to Individual Draft](https://timchown.github.io/address-accountability/#go.draft-chown-address-accountability.diff)
+* [Editor's Copy](https://timchown.github.io/address-accountability/#go.draft-chown-v6ops-address-accountability.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-chown-v6ops-address-accountability)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-chown-v6ops-address-accountability)
+* [Compare Editor's Copy to Individual Draft](https://timchown.github.io/address-accountability/#go.draft-chown-v6ops-address-accountability.diff)
 
 
 ## Contributing
