@@ -40,6 +40,15 @@ author:
   country: United Kingdom
   email: tim.chown@jisc.ac.uk
 
+author:
+- name: Chris Cummings
+  org: ESnet
+  street: 
+  city: 
+  code: 
+  country: USA
+  email: chriscummings@es.net
+  
 normative:
   RFC1918:
   RFC2131:
