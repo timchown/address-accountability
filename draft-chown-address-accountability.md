@@ -144,8 +144,8 @@ following categories.
    If all ND traffic observed on a link can be captured, it should be
    possible for IPv6 address usage to be recorded.  This would require
    appropriate capability on a device on any given subnet, e.g. as is
-   currently achieved for RAmond (https://ramond.sourceforge.net/) 
-   or NDPmon (https://sourceforge.net/projects/ndpmon/), or a reporting 
+   currently achieved for RAmond (https://ramond.sourceforge.net) 
+   or NDPmon (https://sourceforge.net/projects/ndpmon), or a reporting 
    mechanism for the subnet router such as syslog.  
    
    There may also be mechanisms such as a (filtered)
