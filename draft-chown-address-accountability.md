@@ -180,10 +180,11 @@ following categories.
 
 ## Use a host-based registration protocol
 
+Add text
 
 ## Use a prefix per host approach
 
-
+Add text
 
 ## Use SAVI mechanisms
 
