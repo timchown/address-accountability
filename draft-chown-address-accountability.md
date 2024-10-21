@@ -5,7 +5,7 @@ submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
 consensus: true
-category: informational
+category: bcp
 area: "Operations"
 workgroup: "IPv6 Operations"
 
