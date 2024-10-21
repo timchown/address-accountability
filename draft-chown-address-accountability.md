@@ -184,6 +184,13 @@ mechanism for hosts to opt-ion to registering
 their self-generated or statically-configured addresses to a DHCPv6
 server.
 
+## Using a prefix per host
+
+By using a prefix per host, the accountability model shifts from 
+identifying address(es) used by a host, to the prefix from which it
+is using addresses, whether for itself (e.g., for containers) or
+for providing tethering.
+
 ## Use SAVI mechanisms
 
    Discussion of appropriateness of SAVI mechanisms to be added here.
@@ -197,13 +204,13 @@ server.
    networks there is a requirement to be able to identify which users
    have been using which addresses or devices at a given point in time.
    This draft was written in response to requests for improved
-   accountability for IPv6 traffic in (mainly) UK academic sites, but
+   accountability for IPv6 traffic in university campus sites, but
    the same rationale is likely to apply elsewhere.
 
    While the sources of data that may be used for such purposes (e.g.
    state on routers or switches) is generally not available to general
    users of the network, it is available to administrators of the
-   network.  The use of privacy mechanisms, e.g.  RFC 4941, gives the
+   network.  The use of privacy mechanisms, e.g.,  RFC 8191, gives the
    greatest benefit when the addresses are being observed by external
    third parties.
 
