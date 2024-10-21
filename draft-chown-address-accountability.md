@@ -137,7 +137,8 @@ following categories.
 
    This is the approach adopted by tools such as {{NAV}} and {{Netdot}}, but
    there is some concern expressed at the load that may be placed on
-   devices by frequent SNMP or other polling.  The polling frequency
+   devices by frequent Simple Network Management Protocol (SNMP) 
+   or other polling.  The polling frequency
    needs to be rapid enough to ensure that cached ND/ARP data on devices
    is not expired between polling intervals, i.e., the ND/ARP data should
    not be expired more frequently than the device is polled.
