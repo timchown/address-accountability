@@ -72,7 +72,7 @@ informative:
    instead autoconfigure their own global address(es), and potentially use
    many privacy addresses over time.  This behaviour places an
    additional burden on network operators who require address
-   accountability for their users and devices.  There has been some
+   accountability for their users and devices. There has been some
    discussion of this issue on various mail lists; this text attempts to
    capture the issues to encourage further discussion.
 
