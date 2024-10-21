@@ -7,6 +7,7 @@
 <title>IPv6 Address Accountability Considerations</title>
 <meta content="Tim Chown" name="author">
 <meta content="Chris Cummings" name="author">
+<meta content="Dale W. Carder" name="author">
 <meta content="
        Hosts in IPv4 networks typically acquire addresses by use of DHCP,
    and retain that address and only that address while the DHCP lease
@@ -14,13 +15,13 @@
    instead autoconfigure their own global address(es), and potentially use
    many privacy addresses over time.  This behaviour places an
    additional burden on network operators who require address
-   accountability for their users and devices.  There has been some
+   accountability for their users and devices. There has been some
    discussion of this issue on various mail lists; this text attempts to
    capture the issues to encourage further discussion. 
     " name="description">
 <meta content="xml2rfc 3.23.2" name="generator">
 <meta content="IPv6" name="keyword">
-<meta content="draft-chown-address-accountability-latest" name="ietf.draft">
+<meta content="draft-chown-v6ops-address-accountability-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.23.2
     Python 3.12.7
@@ -36,7 +37,7 @@
     setuptools 70.3.0
     wcwidth 0.2.13
 -->
-<link href="draft-chown-address-accountability.xml" rel="alternate" type="application/rfc+xml">
+<link href="draft-chown-v6ops-address-accountability.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">@font-face {
   font-family: 'Lora';
@@ -1036,7 +1037,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <td class="right">October 2024</td>
 </tr></thead>
 <tfoot><tr>
-<td class="left">Chown &amp; Cummings</td>
+<td class="left">Chown, et al.</td>
 <td class="center">Expires 24 April 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
@@ -1047,7 +1048,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dt class="label-workgroup">Workgroup:</dt>
 <dd class="workgroup">IPv6 Operations</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-chown-address-accountability-latest</dd>
+<dd class="internet-draft">draft-chown-v6ops-address-accountability-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
 <time datetime="2024-10-21" class="published">21 October 2024</time>
@@ -1066,6 +1067,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <div class="author-name">C. Cummings</div>
 <div class="org">Energy Sciences Network</div>
 </div>
+<div class="author">
+      <div class="author-name">D. Carder</div>
+<div class="org">ESnet</div>
+</div>
 </dd>
 </dl>
 </div>
@@ -1078,7 +1083,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
    instead autoconfigure their own global address(es), and potentially use
    many privacy addresses over time.  This behaviour places an
    additional burden on network operators who require address
-   accountability for their users and devices.  There has been some
+   accountability for their users and devices. There has been some
    discussion of this issue on various mail lists; this text attempts to
    capture the issues to encourage further discussion.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
@@ -1088,8 +1093,8 @@ svg :is([fill="white"], [fill^="#fff"]) {
       </h2>
 <p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
 <p id="section-note.1-2">
-        The latest revision of this draft can be found at <span><a href="https://timchown.github.io/address-accountability/draft-chown-address-accountability.html">https://timchown.github.io/address-accountability/draft-chown-address-accountability.html</a></span>.
-        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-chown-address-accountability/">https://datatracker.ietf.org/doc/draft-chown-address-accountability/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+        The latest revision of this draft can be found at <span><a href="https://timchown.github.io/address-accountability/draft-chown-v6ops-address-accountability.html">https://timchown.github.io/address-accountability/draft-chown-v6ops-address-accountability.html</a></span>.
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-chown-v6ops-address-accountability/">https://datatracker.ietf.org/doc/draft-chown-v6ops-address-accountability/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
 <p id="section-note.1-3">
         Discussion of this document takes place on the
         IPv6 Operations Working Group mailing list (<span><a href="mailto:v6ops@ietf.org">mailto:v6ops@ietf.org</a></span>),
@@ -1460,7 +1465,7 @@ as defined in <span>[<a href="#RFC6620" class="cite xref">RFC6620</a>]</span>.<a
       </h2>
 <p id="section-7-1">The author would like to thank the following people for comments on and
 suggestions for this text:
-Dale Carder, Lorenzo Colitti, Mark Smith, and James Woodyatt.<a href="#section-7-1" class="pilcrow">¶</a></p>
+Lorenzo Colitti, Mark Smith, and James Woodyatt.<a href="#section-7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-combined-references">
@@ -1559,6 +1564,14 @@ Dale Carder, Lorenzo Colitti, Mark Smith, and James Woodyatt.<a href="#section-7
 <div class="email">
 <span>Email:</span>
 <a href="mailto:chris@cummings.tech" class="email">chris@cummings.tech</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Dale W. Carder</span></div>
+<div dir="auto" class="left"><span class="org">ESnet</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:dwcarder@es.net" class="email">dwcarder@es.net</a>
 </div>
 </address>
 </section>
