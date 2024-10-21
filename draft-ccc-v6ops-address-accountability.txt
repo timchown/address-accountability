@@ -12,7 +12,7 @@ Expires: 24 April 2025                           Energy Sciences Network
 
 
                IPv6 Address Accountability Considerations
-            draft-chown-v6ops-address-accountability-latest
+             draft-ccc-v6ops-address-accountability-latest
 
 Abstract
 
@@ -33,7 +33,7 @@ About This Document
    The latest revision of this draft can be found at
    https://timchown.github.io/address-accountability/draft-chown-v6ops-
    address-accountability.html.  Status information for this document
-   may be found at https://datatracker.ietf.org/doc/draft-chown-v6ops-
+   may be found at https://datatracker.ietf.org/doc/draft-ccc-v6ops-
    address-accountability/.
 
    Discussion of this document takes place on the IPv6 Operations
