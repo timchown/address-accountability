@@ -405,4 +405,4 @@ Authors' Addresses
 
    Chris Cummings
    Energy Sciences Network
-   Email: chriscummings@es.net
+   Email: chris@cummings.tech
