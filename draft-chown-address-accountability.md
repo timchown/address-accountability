@@ -36,15 +36,12 @@ author:
         ins: T. Chown
         name: Tim Chown
         org: Jisc
-        country: United Kingdom
         email: Tim.Chown@jisc.ac.uk
-        -
+      -
         ins: C. Cummings
         name: Chris Cummings
         org: ESnet
-        country: USA
-        email: chriscummings@es.net
-    
+        email: chriscummings@es.net  
   
 normative:
   RFC1918:
