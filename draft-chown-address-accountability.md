@@ -49,14 +49,6 @@ normative:
   RFC8191:
 informative:
   RFC2663:
-NAV:
-  target: https://nav.uninett.no
-  title: Network Automation Virtualised
-  author: 
-Netdot:
-  target: https://github.com/cvicente/Netdot
-  title: Network Documentation Tool
-  author: 
 
 --- abstract
 
@@ -135,10 +127,13 @@ following categories.
    use at any specific point in time and which addresses are being used
    on which switch ports (and thus users or devices).
 
-   This is the approach adopted by tools such as {{NAV}} and {{Netdot}}, but
-   there is some concern expressed at the load that may be placed on
+   This is the approach that has been adopted by tools such as 
+   NAV (https://nav.uninett.no) and Netdot (https://nav.uninett.no), and 
+   that will be found in many other (open source) tools.
+
+   The downside of this approach is the load that may be placed on
    devices by frequent Simple Network Management Protocol (SNMP) 
-   or other polling.  The polling frequency
+   or other polling. The polling frequency
    needs to be rapid enough to ensure that cached ND/ARP data on devices
    is not expired between polling intervals, i.e., the ND/ARP data should
    not be expired more frequently than the device is polled.
