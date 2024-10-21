@@ -5,7 +5,7 @@ submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
 consensus: true
-category: informational
+category: bcp
 area: "Operations"
 workgroup: "IPv6 Operations"
 
@@ -113,8 +113,8 @@ times in various discussion fora. This document attempts to capture
 the various solutions proposed, noting the advantages and disadvantages
 of each approach.
 
-At this stage of the draft's evolution, no single approach is recommended. 
-The best solution may vary depending on the scenario and tools available.
+At this stage of the draft, no single approach is recommended. The best
+solution may vary depending on the scenario and tools available.
 
 The existing approaches to address accountability fall into the 
 following categories.
@@ -144,24 +144,19 @@ following categories.
    If all ND traffic observed on a link can be captured, it should be
    possible for IPv6 address usage to be recorded.  This would require
    appropriate capability on a device on any given subnet, e.g. as is
-   currently achieved for RAmond (https://ramond.sourceforge.net) 
-   or NDPmon (https://sourceforge.net/projects/ndpmon), or a reporting 
-   mechanism for the subnet router such as syslog.  
-   
-   There may also be mechanisms such as a (filtered)
-   Remote Switch Port Analyser (RSPAN) that may be suitable.
+   currently achieved for RAmond or NDPmon, or a reporting mechanism for
+   the subnet router.  There may also be mechanisms such as a (filtered)
+   RSPAN that may be suitable; at least one implementation of this has
+   been published.
 
    A benefit of this approach is that collecting all ND traffic would
    allow additional accounting and fault detection to be undertaken,
    e.g. rogue RA detection, or DAD DoS detection.
 
-   The downside may be the significant volume of traffic to be held,
-   if a lengthy history is desired.
-
 ## Force use of DHCPv6 only
 
    One approach to accountability is to attempt to force devices to only
-   use DHCPv6, and not SLAAC, which would in principle give the same address
+   use DHCPv6, which would in principle give the same address
    accountability model as exists for IPv4 today. {{RFC4649}} for DHCPv6
    appears to give at least some of the functionality of DHCP option 82.
 
@@ -173,18 +168,6 @@ following categories.
    option should be ignored.  A user running the device will need to
    determine the on-link prefix if they wish to manually configure their
    own address.
-
-   Not all common operating systems support DHCPv6 for host addressing,
-   Android being the most notable exception.
-   
-
-## Use a host-based registration protocol
-
-Add text
-
-## Use a prefix per host approach
-
-Add text
 
 ## Use SAVI mechanisms
 
@@ -199,13 +182,13 @@ Add text
    networks there is a requirement to be able to identify which users
    have been using which addresses or devices at a given point in time.
    This draft was written in response to requests for improved
-   accountability for IPv6 traffic in university campus sites, but
+   accountability for IPv6 traffic in (mainly) UK academic sites, but
    the same rationale is likely to apply elsewhere.
 
-   While the sources of data that may be used for such purposes (e.g.,
+   While the sources of data that may be used for such purposes (e.g.
    state on routers or switches) is generally not available to general
    users of the network, it is available to administrators of the
-   network.  The use of privacy mechanisms, e.g. RFC 8941, gives the
+   network.  The use of privacy mechanisms, e.g.  RFC 4941, gives the
    greatest benefit when the addresses are being observed by external
    third parties.
 
@@ -214,9 +197,8 @@ Add text
 
    This text is an initial draft attempting to capture the issues
    related to IPv6 address accountability models.  If an all-DHCPv6
-   model is not viable, and in particular where SLAAC-based 
-   privacy addresses are in use, IPv6 network administrators will need to 
-   deploy appropriate tools to allow them to account for hosts
+   model is not viable, IPv6 network administrators will need to deploy
+   management and monitoring tools to allow them to account for hosts
    that will have multiple IPv6 addresses that may also change rapidly
    over time.
 
