@@ -180,7 +180,7 @@ Android being the most notable exception.
 
 ## Use a host-based registration protocol
 
-A current I-D, draft-ietf-dhc-addr-notification, presents a 
+A current I-D, {{I-D.ietf-dhc-addr-notification}}, presents a 
 mechanism for hosts to opt-ion to registering 
 their self-generated or statically-configured addresses to a DHCPv6
 server.
