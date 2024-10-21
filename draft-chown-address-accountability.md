@@ -5,7 +5,7 @@ submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
 consensus: true
-category: informational
+category: info
 area: "Operations"
 workgroup: "IPv6 Operations"
 
@@ -40,13 +40,13 @@ author:
   country: United Kingdom
   email: tim.chown@jisc.ac.uk
 
-
 normative:
   RFC1918:
   RFC2131:
   RFC4649:
   RFC4862:
   RFC8191:
+  
 informative:
   RFC2663:
 
