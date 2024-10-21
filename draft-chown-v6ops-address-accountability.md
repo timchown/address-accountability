@@ -1,6 +1,6 @@
 ---
 v: 3
-docname: draft-chown-v6ops-address-accountability-02
+docname: draft-chown-v6ops-address-accountability-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
@@ -40,14 +40,14 @@ author:
       -
         ins: C. Cummings
         name: Chris Cummings
-        org: ESnet
-        email: chriscummings@es.net  
+        org: Energy Sciences Network
+        email: chris@cummings.tech
       -
         ins: D. Carder
         name: Dale W. Carder
         org: ESnet
-        email: dwcarder@es.net 
-  
+        email: dwcarder@es.net
+
 normative:
   RFC1918:
   RFC2131:
@@ -82,18 +82,18 @@ informative:
 
 Administrators of IPv4 networks are used to an address accountability
 model where devices acquire a single IPv4 address using DHCP {{RFC2131}}
-and then use that address while the DHCP lease is valid.  
+and then use that address while the DHCP lease is valid.
 
 The IPv4 address may be a global address, or a private address {{RFC1918}}
 used in conjunction with Network Address Translation (NAT) {{RFC2663}}.
-The address obtained by DHCP is typically tied to a specific device 
+The address obtained by DHCP is typically tied to a specific device
 MAC address.
-   
+
 This model allows an administrator to track back an IP address to a user or
 device, in the event of some incident or fault requiring investigation.
-   
-While by no means foolproof, this model, which may include use of DHCP 
-option 82, is one that IPv4 network administrators are generally 
+
+While by no means foolproof, this model, which may include use of DHCP
+option 82, is one that IPv4 network administrators are generally
 comfortable with.
 
 In IPv6 networks, where hosts may use SLAAC {{RFC4862}} and Privacy
@@ -115,47 +115,47 @@ in campus 'Bring Your Own Device' (BYOD) deployments.
 It is also worth noting that in an IPv4 network, it is more difficult
 for a user to pick and use an address manually without clashing with
 an existing device on the network, while in IPv6 networks picking an
-unused address is simple to do without an address clash.  
+unused address is simple to do without an address clash.
 
 
 # Address accountability approaches
 
-The issue of address accountability for IPv6 networks, and thus also 
+The issue of address accountability for IPv6 networks, and thus also
 for dual-stack IPv4-IPv6 networks, is one that has been raised many
 times in various discussion fora. This document attempts to capture
 the various solutions proposed, noting the advantages and disadvantages
 of each approach.
 
-At this stage of the draft's evolution, no single approach is recommended. 
+At this stage of the draft's evolution, no single approach is recommended.
 The best solution may vary depending on the scenario and tools available.
 
-The existing approaches to address accountability fall into the 
+The existing approaches to address accountability fall into the
 following categories.
 
 ## Switch-router polling
 
-By polling network switch and router devices for IPv4 Address Resolution 
-Protocol (ARP) tables and IPv6 Neighbour Discovery (ND) tables, and 
+By polling network switch and router devices for IPv4 Address Resolution
+Protocol (ARP) tables and IPv6 Neighbour Discovery (ND) tables, and
    correlating the results with switch port MAC
    tables, it should be possible to determine which IP addresses are in
    use at any specific point in time and which addresses are being used
    on which switch ports (and thus users or devices).
 
 
-   This is the approach that has been adopted by tools such as 
-   NAV (https://nav.uninett.no) and Netdot (https://nav.uninett.no), and 
+   This is the approach that has been adopted by tools such as
+   NAV (https://nav.uninett.no) and Netdot (https://nav.uninett.no), and
    that will be found in many other (open source) tools.  It is sometimes
    referred to as "ND cache scraping".
 
-   Such scraping is mentioned in {{RFC9099}}, Section 2.6.1.4, 
+   Such scraping is mentioned in {{RFC9099}}, Section 2.6.1.4,
    where approaches to gather
-   the data include SNMP (specifically {{RFC4293}}), 
+   the data include SNMP (specifically {{RFC4293}}),
    streaming telemetry (where the collector
    subscribes to updates/notifications from the device) and using a
    command line interface (CLI, such as ssh).
 
    The downside of this approach is the load that may be placed on
-   devices by frequent Simple Network Management Protocol (SNMP) 
+   devices by frequent Simple Network Management Protocol (SNMP)
    or other polling. The polling frequency
    needs to be rapid enough to ensure that cached ND/ARP data on devices
    is not expired between polling intervals, i.e., the ND/ARP data should
@@ -167,10 +167,10 @@ Protocol (ARP) tables and IPv6 Neighbour Discovery (ND) tables, and
    If all ND traffic observed on a link can be captured, it should be
    possible for IPv6 address usage to be recorded.  This would require
    appropriate capability on a device on any given subnet, e.g. as is
-   currently achieved for RAmond (https://ramond.sourceforge.net) 
-   or NDPmon (https://sourceforge.net/projects/ndpmon), or a reporting 
-   mechanism for the subnet router, such as syslog.  
-   
+   currently achieved for RAmond (https://ramond.sourceforge.net)
+   or NDPmon (https://sourceforge.net/projects/ndpmon), or a reporting
+   mechanism for the subnet router, such as syslog.
+
    There may also be mechanisms such as a (filtered)
    Remote Switch Port Analyser (RSPAN) that may be suitable.
 
@@ -185,8 +185,8 @@ if a lengthy history is desired.
 
    One approach to accountability is to attempt to force devices to only
    use DHCPv6, rather than SLAAC, which would in principle give the same address
-   accountability model as exists with DHCP for IPv4 today. 
-   {{RFC4649}} for DHCPv6 appears to give at least some of the functionality 
+   accountability model as exists with DHCP for IPv4 today.
+   {{RFC4649}} for DHCPv6 appears to give at least some of the functionality
    of DHCP option 82.
 
    While it is possible to craft IPv6 Router Advertisements that give
@@ -199,13 +199,13 @@ if a lengthy history is desired.
    own address.
 
 Not all common operating systems support DHCPv6 for host addressing,
-Android being the most notable exception. Larger enterprises that are 
+Android being the most notable exception. Larger enterprises that are
 enforcing use of DHCPv6 appear to be ones running dual-stack, so in those
 scenarios clients that do not support DHCPv6 will be IPv4-only.
 
 ## Using 802.1X
 
-It is now quite common practice for research and education sites - 
+It is now quite common practice for research and education sites -
 university or college campuses and research organisations - to use 802.1X
 for network authentication as part of the international
 eduroam {{RFC7593}} (https://www.eduroam.org) federated authentication system, as
@@ -218,19 +218,19 @@ details of visiting users admitted via eduroam.
 
 ## Use a host-based registration protocol
 
-A current I-D, {{I-D.ietf-dhc-addr-notification}}, presents a 
-mechanism for hosts to opt in to registering 
+A current I-D, {{I-D.ietf-dhc-addr-notification}}, presents a
+mechanism for hosts to opt in to registering
 their self-generated or statically-configured addresses to a DHCPv6
 server.
 
-While it's an opt-in mechanism, it may be enough in some use cases, e.g., 
+While it's an opt-in mechanism, it may be enough in some use cases, e.g.,
 when the enterprise controls the devices that can connect to the network.
 
 There is a consideration for address lifetimes when using this approach.
 
 ## Using a prefix per host
 
-By using a prefix per host, the accountability model shifts from 
+By using a prefix per host, the accountability model shifts from
 identifying address(es) used by a host, to the prefix from which it
 is using addresses, whether for itself (e.g., for containers) or
 for providing tethering.
@@ -246,7 +246,7 @@ The FCFS SAVI: First-Come, First-Served Source Address Validation
 Improvement for Locally Assigned IPv6 Addresses approach could be used
 as defined in {{RFC6620}}.
 
-In this case the accounting 
+In this case the accounting
 
    Discussion of appropriateness of SAVI mechanisms to be added here.
    (In principle, SAVI mechanisms work by observing NDP and DHCP
@@ -265,8 +265,8 @@ In this case the accounting
    While the sources of data that may be used for such purposes (e.g.,
    state on routers or switches) is generally not available to general
    users of the network, it is available to administrators of the
-   network.  
-   
+   network.
+
    The use of privacy mechanisms, e.g.,  RFC 8191, gives the
    greatest benefit when the addresses are being observed by external
    third parties.
@@ -307,7 +307,7 @@ This document has no IANA actions.
 {:numbered="no"}
 
 The author would like to thank the following people for comments on and
-suggestions for this text: 
+suggestions for this text:
 Lorenzo Colitti, Mark Smith, and James Woodyatt.
-   
+
 --- back
