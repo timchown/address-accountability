@@ -1231,7 +1231,7 @@ device, in the event of some incident or fault requiring investigation.<a href="
 option 82, is one that IPv4 network administrators are generally
 comfortable with.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">In IPv6 networks, where hosts may use SLAAC <span>[<a href="#RFC4862" class="cite xref">RFC4862</a>]</span> and Privacy
-Addresses <span>[<a href="#RFC8191" class="cite xref">RFC8191</a>]</span>, it is quite possible that a host may use
+Addresses <span>[<a href="#RFC8191" class="cite xref">RFC8191</a>]</span>, it is quite possible and highly likely that a host may use
 multiple IPv6 addresses over time, possibly changing addresses used
 frequently, or using multiple addresses concurrently.  Where privacy
 addresses are used, a host may choose to generate and start using a
@@ -1239,7 +1239,7 @@ new privacy address at any time, and will also typically generate a
 new privacy address after rebooting.  Clients may use different IPv6
 addresses per application, while servers may have multiple addresses
 configured, one per service offered.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">There are many reasons why address stability is desirable, e.g.,  DNS
+<p id="section-1-6">There are many reasons why address stability is desirable, e.g., DNS
 mappings, ACLs using IP addresses, and logging.  However, such
 stability may not typically exist in IPv6 client networks,
 particularly where clients are not managed by the network provider, e.g.,
@@ -1283,7 +1283,8 @@ Protocol (ARP) tables and IPv6 Neighbour Discovery (ND) tables, and
    where approaches to gather
    the data include SNMP (specifically <span>[<a href="#RFC4293" class="cite xref">RFC4293</a>]</span>),
    streaming telemetry (where the collector
-   subscribes to updates/notifications from the device) and using a
+   subscribes to updates/notifications from the device), an Application
+   Programming Interface (API), and using a
    command line interface (CLI, such as ssh).<a href="#section-2.1-3" class="pilcrow">¶</a></p>
 <p id="section-2.1-4">The downside of this approach is the load that may be placed on
    devices by frequent Simple Network Management Protocol (SNMP)
@@ -1322,10 +1323,10 @@ if a lengthy history is desired.<a href="#section-2.2-4" class="pilcrow">¶</a><
 <p id="section-2.3-1">One approach to accountability is to attempt to force devices to only
    use DHCPv6, rather than SLAAC, which would in principle give the same address
    accountability model as exists with DHCP for IPv4 today.
-   <span>[<a href="#RFC4649" class="cite xref">RFC4649</a>]</span> for DHCPv6 appears to give at least some of the functionality
+   <span>[<a href="#RFC4649" class="cite xref">RFC4649</a>]</span> for DHCPv6 appears to give at least some functionality
    of DHCP option 82.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
 <p id="section-2.3-2">While it is possible to craft IPv6 Router Advertisements that give
-   hints to hosts that DHCPv6 should be used, i.e., the'M' bit is set, there is
+   hints to hosts that DHCPv6 should be used, i.e., the 'M' bit is set, there is
    no obligation on the host to honour that hint.  However, if the
    Autonomous (A) flag in the Prefix Information option is unset (as
    discussed in section 5.5.3 of RFC 4862), the Prefix Information
@@ -1334,8 +1335,8 @@ if a lengthy history is desired.<a href="#section-2.2-4" class="pilcrow">¶</a><
    own address.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
 <p id="section-2.3-3">Not all common operating systems support DHCPv6 for host addressing,
 Android being the most notable exception. Larger enterprises that are
-enforcing use of DHCPv6 appear to be ones running dual-stack, so in those
-scenarios clients that do not support DHCPv6 will be IPv4-only.<a href="#section-2.3-3" class="pilcrow">¶</a></p>
+enforcing use of DHCPv6 appear to be operating dual-stack environments,
+so in those scenarios clients that do not support DHCPv6 will be IPv4-only.<a href="#section-2.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="using-8021x">
@@ -1380,7 +1381,8 @@ for providing tethering.<a href="#section-2.6-1" class="pilcrow">¶</a></p>
 <p id="section-2.6-2"><span>[<a href="#RFC8273" class="cite xref">RFC8273</a>]</span> and <span>[<a href="#RFC9663" class="cite xref">RFC9663</a>]</span> describe approaches for devices being assigned
 a prefix rather than an address (potentially of many addresses) for
 their network connectivity. The use of a single prefix per device may
-simplify accountability.<a href="#section-2.6-2" class="pilcrow">¶</a></p>
+simplify accountability but may impose an operational cost that some small
+to medium-sized environments cannot justify.<a href="#section-2.6-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="use-savi-mechanisms">
