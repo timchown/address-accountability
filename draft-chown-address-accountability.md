@@ -47,7 +47,7 @@ normative:
   RFC4649:
   RFC4862:
   RFC8191:
-  draft-ietf-dhc-addr-notification:
+  I-D.ietf-dhc-addr-notification:
 informative:
   RFC2663:
 
