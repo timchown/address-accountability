@@ -53,6 +53,8 @@ normative:
 informative:
   RFC2663:
   RFC7593:
+  RFC8273:
+  RFC9663:
 
 --- abstract
 
@@ -225,6 +227,11 @@ identifying address(es) used by a host, to the prefix from which it
 is using addresses, whether for itself (e.g., for containers) or
 for providing tethering.
 
+{{RFC8273}} and {{RFC9663}} describe approaches for devices being assigned
+a prefix rather than an address (potentially of many addresses) for
+their network connectivity. The use of a single prefix per device may
+simplify accountability.
+
 ## Use SAVI mechanisms
 
 The FCFS SAVI: First-Come, First-Served Source Address Validation
@@ -247,12 +254,20 @@ In this case the accounting
    accountability for IPv6 traffic in university campus sites, but
    the same rationale is likely to apply elsewhere.
 
-   While the sources of data that may be used for such purposes (e.g.
+   While the sources of data that may be used for such purposes (e.g.,
    state on routers or switches) is generally not available to general
    users of the network, it is available to administrators of the
-   network.  The use of privacy mechanisms, e.g.,  RFC 8191, gives the
+   network.  
+   
+   The use of privacy mechanisms, e.g.,  RFC 8191, gives the
    greatest benefit when the addresses are being observed by external
    third parties.
+
+   The introduction of randomised MAC addresses for devices is designed
+   to be privacy-enhancing for users, whether used only in the probing
+   messages when seeking to join a network, or for associating to a
+   network to use it. Such randomisation may have an impact on address
+   accountability models.
 
 
 # Conclusions
