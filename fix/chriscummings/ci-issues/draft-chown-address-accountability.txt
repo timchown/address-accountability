@@ -5,7 +5,7 @@
 IPv6 Operations                                                 T. Chown
 Internet-Draft                                                      Jisc
 Intended status: Informational                               C. Cummings
-Expires: 24 April 2025                                             ESnet
+Expires: 24 April 2025                           Energy Sciences Network
                                                          21 October 2024
 
 
@@ -404,5 +404,5 @@ Authors' Addresses
 
 
    Chris Cummings
-   ESnet
+   Energy Sciences Network
    Email: chriscummings@es.net
