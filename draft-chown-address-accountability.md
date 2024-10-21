@@ -5,7 +5,7 @@ submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
 consensus: true
-category: bcp
+category: info
 area: "Operations"
 workgroup: "IPv6 Operations"
 
@@ -17,7 +17,6 @@ venue:
   github: "timchown/address-accountability"
   latest: https://timchown.github.io/address-accountability/draft-chown-address-accountability.html
 
-seriesno: '220'
 pi:
   toc: 'yes'
   tocdepth: '3'
