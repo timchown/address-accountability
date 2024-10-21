@@ -1,6 +1,6 @@
 ---
 v: 3
-docname: draft-ccc-address-accountability-00
+docname: draft-chown-v6ops-address-accountability-02
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
@@ -15,7 +15,7 @@ venue:
   mail: "v6ops@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/v6ops/"
   github: "timchown/address-accountability"
-  latest: https://timchown.github.io/address-accountability/draft-ccc-address-accountability.html
+  latest: https://timchown.github.io/address-accountability/draft-chown-v6ops-address-accountability.html
 
 pi:
   toc: 'yes'
