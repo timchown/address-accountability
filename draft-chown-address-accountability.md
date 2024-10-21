@@ -47,7 +47,6 @@ normative:
   RFC4649:
   RFC4862:
   RFC8191:
-  
 informative:
   RFC2663:
 
@@ -121,8 +120,8 @@ following categories.
 
 ## Switch-router polling
 
-   By polling network switch and router devices for IPv4 Address Resolution 
-   Protocol (ARP) tables and IPv6 Neighbour Discovery (ND) tables, and 
+By polling network switch and router devices for IPv4 Address Resolution 
+Protocol (ARP) tables and IPv6 Neighbour Discovery (ND) tables, and 
    correlating the results with switch port MAC
    tables, it should be possible to determine which IP addresses are in
    use at any specific point in time and which addresses are being used
@@ -218,12 +217,10 @@ There are no extra security consideration for this document.
 
 This document has no IANA actions.
 
-
---- back
-
 # Acknowledgments
 {:numbered="no"}
 
 The author would like to thank the following people for comments on
    this text: Mark Smith and James Woodyatt.
    
+--- back
