@@ -1,6 +1,6 @@
 ---
 v: 3
-docname: draft-chown-v6ops-address-accountability-latest
+docname: draft-ccc-v6ops-address-accountability-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
