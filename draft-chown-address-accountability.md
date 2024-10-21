@@ -5,7 +5,7 @@ submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
 consensus: true
-category: bcp
+category: informational
 area: "Operations"
 workgroup: "IPv6 Operations"
 
@@ -15,7 +15,6 @@ venue:
   mail: "v6ops@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/v6ops/"
   github: "timchown/address-accountability"
-  latest: "https://timchown.github.io/address-accountability/draft-chown-address-accountability.html"
 
 seriesno: '220'
 pi:
@@ -43,19 +42,27 @@ author:
 
 
 normative:
-  RFC4191:
+  RFC1918:
+  RFC2131:
+  RFC4649:
   RFC4862:
+  RFC8191:
 
- 
 informative:
-  RFC0793:
+  RFC2663:
+
+NAV:
+  target: https://nav.uninett.no
+Netdot:
+  target: https://github.com/cvicente/Netdot
+
 
 --- abstract
 
    Hosts in IPv4 networks typically acquire addresses by use of DHCP,
    and retain that address and only that address while the DHCP lease
    remains valid.  In IPv6 networks, hosts may use DHCPv6, but may
-   instead autoconfigure their own global addresses, and potentially use
+   instead autoconfigure their own global address(es), and potentially use
    many privacy addresses over time.  This behaviour places an
    additional burden on network operators who require address
    accountability for their users and devices.  There has been some
@@ -66,72 +73,72 @@ informative:
 
 # Introduction
 
+Administrators of IPv4 networks are used to an address accountability
+model where devices acquire a single IPv4 address using DHCP {{RFC2131}}
+and then use that address while the DHCP lease is valid.  
 
-   Administrators of IPv4 networks are used to an address accountability
-   model where devices acquire a single global address using DHCP and
-   then use that address while the DHCP lease is valid.  The model
-   allows an administrator to track back an IP address to a user or
-   device, in the event of some incident or fault requiring
-   investigation.  While by no means foolproof, this model, which may
-   include use of DHCP option 82, is one that IPv4 network
-   administrators are generally comfortable with.
+The IPv4 address may be a global address, or a private address {{RFC1918}}
+used in conjunction with Network Address Translation (NAT) {{RFC2663}}.
+The address obtained by DHCP is typically tied to a specific device 
+MAC address.
+   
+This model allows an administrator to track back an IP address to a user or
+device, in the event of some incident or fault requiring investigation.
+   
+While by no means foolproof, this model, which may include use of DHCP 
+option 82, is one that IPv4 network administrators are generally 
+comfortable with.
 
-   There are many reasons why address stability is desirable, e.g.  DNS
-   mappings, ACLs using IP addresses, and logging.  However, such
-   stability may not typically exist in IPv6 client networks,
-   particularly where clients are user managed.
+In IPv6 networks, where hosts may use SLAAC {{RFC4862}} and Privacy
+Addresses {{RFC8991}}, it is quite possible that a host may use
+multiple IPv6 addresses over time, possibly changing addresses used
+frequently, or using multiple addresses concurrently.  Where privacy
+addresses are used, a host may choose to generate and start using a
+new privacy address at any time, and will also typically generate a
+new privacy address after rebooting.  Clients may use different IPv6
+addresses per application, while servers may have multiple addresses
+configured, one per service offered.
 
-   In IPv6 networks, where hosts may use SLAAC {{RFC4862}} and Privacy
-   Addresses {{RFC4191}}, it is quite possible that a host may use
-   multiple IPv6 addresses over time, possibly changing addresses used
-   frequently, or using multiple addresses concurrently.  Where privacy
-   addresses are used, a host may choose to generate and start using a
-   new privacy address at any time, and will also typically generate a
-   new privacy address after rebooting.  Clients may use different IPv6
-   addresses per application, while servers may have multiple addresses
-   configured, one per service offered.
+There are many reasons why address stability is desirable, e.g.,  DNS
+mappings, ACLs using IP addresses, and logging.  However, such
+stability may not typically exist in IPv6 client networks,
+particularly where clients are not managed by the network provider, e.g.,
+in campus 'Bring Your Own Device' (BYOD) deployments.
 
-   It is also worth noting that in an IPv4 network, it is more difficult
-   for a user to pick and use an address manually without clashing with
-   an existing device on the network, while in IPv6 networks, picking an
-   unused address is simple to do without an address clash.  Thus
-   picking an unused IP address becomes as simple as picking an unused
-   Layer 2 address.  Continuing that comparison, some virtualised OSes
-   may pick randomly generated link layer addresses, and may change
-   these upon virtual host reboot.
-
-
-# Requirements Language
-
-{::boilerplate bcp14-tagged}
+It is also worth noting that in an IPv4 network, it is more difficult
+for a user to pick and use an address manually without clashing with
+an existing device on the network, while in IPv6 networks picking an
+unused address is simple to do without an address clash.  
 
 
-# Abbreviations Used in This Document
+# Address accountability approaches
 
-~~~~
-ND    Neighbor Discovery
-NS    Neighbor Solicitation
-~~~~
+The issue of address accountability for IPv6 networks, and thus also 
+for dual-stack IPv4-IPv6 networks, is one that has been raised many
+times in various discussion fora. This document attempts to capture
+the various solutions proposed, noting the advantages and disadvantages
+of each approach.
 
+At this stage of the draft, no single approach is recommended. The best
+solution may vary depending on the scenario and tools available.
 
-# Accountability approaches
-
-There are various approaches to address accountability, which have
-   different costs, benefits and trade-offs.
+The existing approaches to address accountability fall into the 
+following categories.
 
 ## Switch-router polling
 
-   By polling network switch and router devices for IPv4 ARP tables and
-   IPv6 ND tables, and correlating the results with switch port MAC
+   By polling network switch and router devices for IPv4 Address Resolution 
+   Protocol (ARP) tables and IPv6 Neighbour Discovery (ND) tables, and 
+   correlating the results with switch port MAC
    tables, it should be possible to determine which IP addresses are in
    use at any specific point in time and which addresses are being used
    on which switch ports (and thus users or devices).
 
-   This is the approach adopted by tools such as NAV and Netdot, but
+   This is the approach adopted by tools such as {{NAV}} and {{Netdot}}, but
    there is some concern expressed at the load that may be placed on
    devices by frequent SNMP or other polling.  The polling frequency
    needs to be rapid enough to ensure that cached ND/ARP data on devices
-   is not expired between polling intervals, i.e. the ND/ARP data should
+   is not expired between polling intervals, i.e., the ND/ARP data should
    not be expired more frequently than the device is polled.
 
 ## Record all ND traffic
@@ -152,14 +159,14 @@ There are various approaches to address accountability, which have
 
    One approach to accountability is to attempt to force devices to only
    use DHCPv6, which would in principle give the same address
-   accountability model as exists for IPv4 today.  [RFC4649] for DHCPv6
+   accountability model as exists for IPv4 today. {{RFC4649}} for DHCPv6
    appears to give at least some of the functionality of DHCP option 82.
 
    While it is possible to craft IPv6 Router Advertisements that give
    'hints' to hosts that DHCPv6 should be used ('M' bit set), there is
    no obligation on the host to honour that hint.  However, if the
    Autonomous (A) flag in the Prefix Information option is unset (as
-   discussed in section 5.5.3 of RFC 4862), the Preifx Information
+   discussed in section 5.5.3 of RFC 4862), the Prefix Information
    option should be ignored.  A user running the device will need to
    determine the on-link prefix if they wish to manually configure their
    own address.
@@ -170,7 +177,7 @@ There are various approaches to address accountability, which have
    (In principle, SAVI mechanisms work by observing NDP and DHCP
    messages, allowing bindings to be set up and recorded.)
 
-## Privacy Considerations
+# Privacy Considerations
 
    This draft discusses mechanisms for a site or organisation to manage
    address accountability where IPv6 has been deployed.  In most
@@ -188,7 +195,7 @@ There are various approaches to address accountability, which have
    third parties.
 
 
-## Conclusions
+# Conclusions
 
    This text is an initial draft attempting to capture the issues
    related to IPv6 address accountability models.  If an all-DHCPv6
@@ -202,10 +209,6 @@ There are various approaches to address accountability, which have
    addressing methods if they emerge in the future.
 
    Feedback on the issues discussed here is welcomed.
-
-
-
-
 
 
 # Security Considerations
@@ -224,5 +227,5 @@ This document has no IANA actions.
 {:numbered="no"}
 
 The author would like to thank the following people for comments on
-   this text: Mark Smith, and James Woodyatt.
+   this text: Mark Smith and James Woodyatt.
    
