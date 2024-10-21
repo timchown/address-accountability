@@ -32,20 +32,19 @@ workgroup: "IPv6 Operations"
 kw: IPv6
 
 author:
-- name: Tim Chown
-  org: Jisc
-  street: 4 Portwall Lane
-  city: Bristol
-  code: BS1 6NB
-  country: United Kingdom
-  email: tim.chown@jisc.ac.uk
-- name: Chris Cummings
-  org: ESnet
-  street: 
-  city: 
-  code: 
-  country: USA
-  email: chriscummings@es.net
+      -
+        ins: T. Chown
+        name: Tim Chown
+        org: Jisc
+        country: United Kingdom
+        email: Tim.Chown@jisc.ac.uk
+        -
+        ins: C. Cummings
+        name: Chris Cummings
+        org: ESnet
+        country: USA
+        email: chriscummings@es.net
+    
   
 normative:
   RFC1918:
