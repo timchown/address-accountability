@@ -112,8 +112,8 @@ times in various discussion fora. This document attempts to capture
 the various solutions proposed, noting the advantages and disadvantages
 of each approach.
 
-At this stage of the draft, no single approach is recommended. The best
-solution may vary depending on the scenario and tools available.
+At this stage of the draft's evolution, no single approach is recommended. 
+The best solution may vary depending on the scenario and tools available.
 
 The existing approaches to address accountability fall into the 
 following categories.
@@ -143,14 +143,19 @@ Protocol (ARP) tables and IPv6 Neighbour Discovery (ND) tables, and
    If all ND traffic observed on a link can be captured, it should be
    possible for IPv6 address usage to be recorded.  This would require
    appropriate capability on a device on any given subnet, e.g. as is
-   currently achieved for RAmond or NDPmon, or a reporting mechanism for
-   the subnet router.  There may also be mechanisms such as a (filtered)
-   RSPAN that may be suitable; at least one implementation of this has
-   been published.
+   currently achieved for RAmond (https://ramond.sourceforge.net) 
+   or NDPmon (https://sourceforge.net/projects/ndpmon), or a reporting 
+   mechanism for the subnet router, such as syslog.  
+   
+   There may also be mechanisms such as a (filtered)
+   Remote Switch Port Analyser (RSPAN) that may be suitable.
 
    A benefit of this approach is that collecting all ND traffic would
    allow additional accounting and fault detection to be undertaken,
    e.g. rogue RA detection, or DAD DoS detection.
+
+The downside may be the significant volume of traffic to be held,
+if a lengthy history is desired.
 
 ## Force use of DHCPv6 only
 
