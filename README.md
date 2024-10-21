@@ -2,10 +2,10 @@
 
 This is the working area for the individual Internet-Draft, "IPv6 Address Accountability Considerations".
 
-* [Editor's Copy](https://timchown.github.io/address-accountability/#go.draft-chown-v6ops-address-accountability.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-chown-v6ops-address-accountability)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-chown-v6ops-address-accountability)
-* [Compare Editor's Copy to Individual Draft](https://timchown.github.io/address-accountability/#go.draft-chown-v6ops-address-accountability.diff)
+* [Editor's Copy](https://timchown.github.io/address-accountability/#go.draft-ccc-v6ops-address-accountability.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ccc-v6ops-address-accountability)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-ccc-v6ops-address-accountability)
+* [Compare Editor's Copy to Individual Draft](https://timchown.github.io/address-accountability/#go.draft-ccc-v6ops-address-accountability.diff)
 
 
 ## Contributing
