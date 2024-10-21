@@ -41,7 +41,7 @@ author:
         ins: C. Cummings
         name: Chris Cummings
         org: Energy Sciences Network
-        email: chriscummings@es.net
+        email: chris@cummings.tech
 
 normative:
   RFC1918:
