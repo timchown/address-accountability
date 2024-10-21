@@ -15,7 +15,7 @@ venue:
   mail: "v6ops@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/v6ops/"
   github: "timchown/address-accountability"
-  latest: https://timchown.github.io/address-accountability/draft-chown-address-accountability.html
+  latest: https://timchown.github.io/address-accountability/draft-chown-v6ops-address-accountability.html
 
 pi:
   toc: 'yes'
@@ -42,6 +42,11 @@ author:
         name: Chris Cummings
         org: Energy Sciences Network
         email: chris@cummings.tech
+      -
+        ins: D. Carder
+        name: Dale W. Carder
+        org: ESnet
+        email: dwcarder@es.net
 
 normative:
   RFC1918:
@@ -67,7 +72,7 @@ informative:
    instead autoconfigure their own global address(es), and potentially use
    many privacy addresses over time.  This behaviour places an
    additional burden on network operators who require address
-   accountability for their users and devices.  There has been some
+   accountability for their users and devices. There has been some
    discussion of this issue on various mail lists; this text attempts to
    capture the issues to encourage further discussion.
 
@@ -303,6 +308,6 @@ This document has no IANA actions.
 
 The author would like to thank the following people for comments on and
 suggestions for this text:
-Dale Carder, Lorenzo Colitti, Mark Smith, and James Woodyatt.
+Lorenzo Colitti, Mark Smith, and James Woodyatt.
 
 --- back
