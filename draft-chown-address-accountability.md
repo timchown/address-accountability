@@ -308,6 +308,6 @@ This document has no IANA actions.
 
 The author would like to thank the following people for comments on and
 suggestions for this text: 
-Dale Carder, Lorenzo Colitti, Mark Smith, and James Woodyatt.
+Lorenzo Colitti, Mark Smith, and James Woodyatt.
    
 --- back
