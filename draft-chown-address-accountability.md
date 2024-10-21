@@ -43,9 +43,12 @@ author:
 normative:
   RFC1918:
   RFC2131:
+  RFC4293:
   RFC4649:
   RFC4862:
+  RFC6620:
   RFC8191:
+  RFC9099:
   I-D.ietf-dhc-addr-notification:
 informative:
   RFC2663:
@@ -128,17 +131,26 @@ Protocol (ARP) tables and IPv6 Neighbour Discovery (ND) tables, and
    use at any specific point in time and which addresses are being used
    on which switch ports (and thus users or devices).
 
+
    This is the approach that has been adopted by tools such as 
    NAV (https://nav.uninett.no) and Netdot (https://nav.uninett.no), and 
    that will be found in many other (open source) tools.  It is sometimes
    referred to as "ND cache scraping".
+
+   Such scraping is mentioned in {{RFC9099}}, Section 2.6.1.4, 
+   where approaches to gather
+   the data include SNMP (specifically {{RFC4293}}), 
+   streaming telemetry (where the collector
+   subscribes to updates/notifications from the device) and using a
+   command line interface (CLI, such as ssh).
 
    The downside of this approach is the load that may be placed on
    devices by frequent Simple Network Management Protocol (SNMP) 
    or other polling. The polling frequency
    needs to be rapid enough to ensure that cached ND/ARP data on devices
    is not expired between polling intervals, i.e., the ND/ARP data should
-   not be expired more frequently than the device is polled.
+   not be expired more frequently than the device is polled. RFC 9099
+   suggests this period may be as low as 30 seconds.
 
 ## Record all ND traffic
 
@@ -201,6 +213,11 @@ mechanism for hosts to opt in to registering
 their self-generated or statically-configured addresses to a DHCPv6
 server.
 
+While it's an opt-in mechanism, it may be enough in some use cases, e.g., 
+when the enterprise controls the devices that can connect to the network.
+
+There is a consideration for address lifetimes when using this approach.
+
 ## Using a prefix per host
 
 By using a prefix per host, the accountability model shifts from 
@@ -209,6 +226,12 @@ is using addresses, whether for itself (e.g., for containers) or
 for providing tethering.
 
 ## Use SAVI mechanisms
+
+The FCFS SAVI: First-Come, First-Served Source Address Validation
+Improvement for Locally Assigned IPv6 Addresses approach could be used
+as defined in {{RFC6620}}.
+
+In this case the accounting 
 
    Discussion of appropriateness of SAVI mechanisms to be added here.
    (In principle, SAVI mechanisms work by observing NDP and DHCP
@@ -260,7 +283,8 @@ This document has no IANA actions.
 # Acknowledgments
 {:numbered="no"}
 
-The author would like to thank the following people for comments on
-   this text: Mark Smith and James Woodyatt.
+The author would like to thank the following people for comments on and
+suggestions for this text: 
+Dale Carder, Lorenzo Colitti, Mark Smith, and James Woodyatt.
    
 --- back
