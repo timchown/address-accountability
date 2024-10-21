@@ -49,6 +49,7 @@ normative:
   I-D.ietf-dhc-addr-notification:
 informative:
   RFC2663:
+  RFC7593:
 
 --- abstract
 
@@ -162,25 +163,41 @@ if a lengthy history is desired.
 
    One approach to accountability is to attempt to force devices to only
    use DHCPv6, rather than SLAAC, which would in principle give the same address
-   accountability model as exists for IPv4 today. {{RFC4649}} for DHCPv6
-   appears to give at least some of the functionality of DHCP option 82.
+   accountability model as exists with DHCP for IPv4 today. 
+   {{RFC4649}} for DHCPv6 appears to give at least some of the functionality 
+   of DHCP option 82.
 
    While it is possible to craft IPv6 Router Advertisements that give
-   'hints' to hosts that DHCPv6 should be used ('M' bit set), there is
+   hints to hosts that DHCPv6 should be used, i.e., the'M' bit is set, there is
    no obligation on the host to honour that hint.  However, if the
    Autonomous (A) flag in the Prefix Information option is unset (as
    discussed in section 5.5.3 of RFC 4862), the Prefix Information
-   option should be ignored.  A user running the device will need to
+   option should be ignored.  In such cases a user running the device will need to
    determine the on-link prefix if they wish to manually configure their
    own address.
 
 Not all common operating systems support DHCPv6 for host addressing,
-Android being the most notable exception.
+Android being the most notable exception. Larger enterprises that are 
+enforcing use of DHCPv6 appear to be ones running dual-stack, so in those
+scenarios clients that do not support DHCPv6 will be IPv4-only.
+
+## Using 802.1X
+
+It is now quite common practice for research and education sites - 
+university or college campuses and research organisations - to use 802.1X
+for network authentication as part of the international
+eduroam {{RFC7593}} (https://www.eduroam.org) federated authentication system, as
+deployed at thousands of educational sites across over 70 countries.
+Use of 802.1X gives the network operator knowledge about their own users
+authenticating, but would require coordination with remote peers for
+details of visiting users admitted via eduroam.
+
+802.1X can also be used for wired network access control.
 
 ## Use a host-based registration protocol
 
 A current I-D, {{I-D.ietf-dhc-addr-notification}}, presents a 
-mechanism for hosts to opt-ion to registering 
+mechanism for hosts to opt in to registering 
 their self-generated or statically-configured addresses to a DHCPv6
 server.
 
