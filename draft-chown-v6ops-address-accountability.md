@@ -277,7 +277,6 @@ In this case the accounting
    network to use it. Such randomisation may have an impact on address
    accountability models.
 
-
 # Conclusions
 
    This text is an initial draft attempting to capture the issues
@@ -293,11 +292,9 @@ In this case the accounting
 
    Feedback on the issues discussed here is welcomed.
 
-
 # Security Considerations
 
 There are no extra security consideration for this document.
-
 
 # IANA Considerations
 
