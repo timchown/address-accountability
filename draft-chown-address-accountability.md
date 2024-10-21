@@ -15,7 +15,7 @@ venue:
   mail: "v6ops@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/v6ops/"
   github: "timchown/address-accountability"
-  latest: "https://timchown.github.io/address-accountability/draft-chown-address-accountability-latest.html"
+  latest: "https://timchown.github.io/address-accountability/draft-chown-address-accountability.html"
 
 seriesno: '220'
 pi:
