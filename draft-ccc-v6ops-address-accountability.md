@@ -56,6 +56,9 @@ normative:
   RFC4862:
   RFC6620:
   RFC8191:
+  RFC8344:
+  RFC8639:
+  RFC8641:
   RFC9099:
   I-D.ietf-dhc-addr-notification:
 informative:
@@ -160,6 +163,23 @@ Protocol (ARP) tables and IPv6 Neighbour Discovery (ND) tables, and
    is not expired between polling intervals, i.e., the ND/ARP data should
    not be expired more frequently than the device is polled. RFC 9099
    suggests this period may be as low as 30 seconds.
+
+## Switch-router streaming
+
+   A potentially better alternative to polling-based methods of gathering
+   neighbor table data is to have the network element stream table updates
+   to a central monitoring system or data-collection service. Using {{RFC8639}}
+   and {{RFC8641}} YANG-Push style event notifications to stream the
+   ipv6/neighbor list entries defined in {{RFC8344}} to a network management
+   system allows an operator to receive a notification every time this table is
+   updated on a device. This data can then be stored and used later to
+   understand which addresses were used at any given time.
+
+   In addition to these standard-based methods, similar information can be
+   gathered by using gNMI and OpenConfig or vendor-provided YANG models.
+   Regardless of the choice in technology for streaming these events, it
+   makes the most sense to use a method that only sends new data when an
+   update is made to the table on the network element.
 
 ## Record all ND traffic
 
