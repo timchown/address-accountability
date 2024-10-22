@@ -343,8 +343,8 @@ Table of Contents
 Acknowledgments
 
    The author would like to thank the following people for comments on
-   and suggestions for this text: Lorenzo Colitti, Mark Smith, and James
-   Woodyatt.
+   and suggestions for this text: Nick Buraglio, Jay Stewart, Lorenzo
+   Colitti, Mark Smith, and James Woodyatt.
 
 References
 
