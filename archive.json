@@ -1,0 +1,147 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2024-10-22T01:18:57.926951+00:00",
+  "repo": "timchown/address-accountability",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDONDdfvc5_XEMn",
+      "title": "fix: linting and docname",
+      "url": "https://github.com/timchown/address-accountability/pull/1",
+      "state": "MERGED",
+      "author": "crankynetman",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This fixes the Markdown file so that everything runs happily in CI. \r\n\r\nYou'll probably want to run `make` in your local environment and then `make fix-lint` before pushing, as that makes sure that everything is cleaned up and happy for the build process. ",
+      "createdAt": "2024-10-21T18:26:29Z",
+      "updatedAt": "2024-10-21T18:39:48Z",
+      "baseRepository": "timchown/address-accountability",
+      "baseRefName": "main",
+      "baseRefOid": "a5c9ce2771210efa63ac02296134f06d12746a56",
+      "headRepository": "timchown/address-accountability",
+      "headRefName": "fix/chriscummings/ci-issues",
+      "headRefOid": "6cb4224add5ce5f8819a573727aa3d92d5e3895e",
+      "closedAt": "2024-10-21T18:39:48Z",
+      "mergedAt": "2024-10-21T18:39:48Z",
+      "mergedBy": "crankynetman",
+      "mergeCommit": {
+        "oid": "8064f30ad121b2feea45cf006fbbe09aa5b3089f"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDONDdfvc6OCkru",
+          "commit": {
+            "abbreviatedOid": "7112d01"
+          },
+          "author": "timchown",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "All looks good.",
+          "createdAt": "2024-10-21T18:35:38Z",
+          "updatedAt": "2024-10-21T18:35:38Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDONDdfvc5_XcTG",
+      "title": "buraglio-suggestions",
+      "url": "https://github.com/timchown/address-accountability/pull/2",
+      "state": "MERGED",
+      "author": "buraglio",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Thanks for working on this. I made a few minor suggestions asI read it. Great work!!",
+      "createdAt": "2024-10-21T19:22:37Z",
+      "updatedAt": "2024-10-21T19:35:44Z",
+      "baseRepository": "timchown/address-accountability",
+      "baseRefName": "main",
+      "baseRefOid": "fa77cdfd4b717e00334c59cc0174700c87b26df6",
+      "headRepository": "buraglio/address-accountability",
+      "headRefName": "buraglio-suggestions",
+      "headRefOid": "47e83ab9d1faf086076c4ce050c3d5196ba0fd65",
+      "closedAt": "2024-10-21T19:35:44Z",
+      "mergedAt": "2024-10-21T19:35:44Z",
+      "mergedBy": "crankynetman",
+      "mergeCommit": {
+        "oid": "1ab95a26cd220cef8a98d0e6dba0328f76f03265"
+      },
+      "comments": [
+        {
+          "author": "timchown",
+          "authorAssociation": "OWNER",
+          "body": "Hopefully Chris and dale are seeing these, I'm now on cake at home :)\r\n\r\nSent from Outlook for Android<https://aka.ms/AAb9ysg>\r\n________________________________\r\nFrom: Nick Buraglio ***@***.***>\r\nSent: Monday, October 21, 2024 8:22:57 PM\r\nTo: timchown/address-accountability ***@***.***>\r\nCc: Tim Chown ***@***.***>; Review requested ***@***.***>\r\nSubject: [timchown/address-accountability] buraglio-suggestions (PR #2)\r\n\r\n\r\nThanks for working on this. I made a few minor suggestions asI read it. Great work!!\r\n\r\n________________________________\r\nYou can view, comment on, or merge this pull request online at:\r\n\r\n  https://github.com/timchown/address-accountability/pull/2\r\n\r\nCommit Summary\r\n\r\n  *   4d1fb1b<https://github.com/timchown/address-accountability/pull/2/commits/4d1fb1b495f924dec5676bab639085be411f4384> Great doc. Added a few minor suggestions as I read it.\r\n  *   47e83ab<https://github.com/timchown/address-accountability/pull/2/commits/47e83ab9d1faf086076c4ce050c3d5196ba0fd65> minor suggestions\r\n\r\nFile Changes\r\n\r\n(1 file<https://github.com/timchown/address-accountability/pull/2/files>)\r\n\r\n  *   M draft-chown-v6ops-address-accountability.md<https://github.com/timchown/address-accountability/pull/2/files#diff-9621951ad8033d765ca9197e69e5cbf89c82977a8e1007b262c6c5e69901dced> (23)\r\n\r\nPatch Links:\r\n\r\n  *   https://github.com/timchown/address-accountability/pull/2.patch\r\n  *   https://github.com/timchown/address-accountability/pull/2.diff\r\n\r\n\u2014\r\nReply to this email directly, view it on GitHub<https://github.com/timchown/address-accountability/pull/2>, or unsubscribe<https://github.com/notifications/unsubscribe-auth/ABMV24GBJEZIEO7A4L43KPDZ4VIBDAVCNFSM6AAAAABQK3U3GOVHI2DSMVQWIX3LMV43ASLTON2WKOZSGYYDGNBVHA3TCMQ>.\r\nYou are receiving this because your review was requested.Message ID: ***@***.***>\r\n",
+          "createdAt": "2024-10-21T19:27:53Z",
+          "updatedAt": "2024-10-21T19:27:53Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDONDdfvc6OC9m_",
+          "commit": {
+            "abbreviatedOid": "47e83ab"
+          },
+          "author": "crankynetman",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Looks awesome, thanks Nick!",
+          "createdAt": "2024-10-21T19:30:21Z",
+          "updatedAt": "2024-10-21T19:30:21Z",
+          "comments": []
+        }
+      ]
+    }
+  ]
+}
