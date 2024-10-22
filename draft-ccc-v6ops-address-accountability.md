@@ -325,6 +325,6 @@ This document has no IANA actions.
 
 The author would like to thank the following people for comments on and
 suggestions for this text:
-Lorenzo Colitti, Mark Smith, and James Woodyatt.
+Nick Buraglio, Jay Stewart, Lorenzo Colitti, Mark Smith, and James Woodyatt.
 
 --- back
