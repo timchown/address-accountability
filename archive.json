@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-10-22T01:18:57.926951+00:00",
+  "timestamp": "2024-10-24T01:17:50.386870+00:00",
   "repo": "timchown/address-accountability",
   "labels": [
     {
@@ -49,7 +49,56 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "number": 4,
+      "id": "I_kwDONDdfvc6bfskF",
+      "title": "Add text about RFC 7217",
+      "url": "https://github.com/timchown/address-accountability/issues/4",
+      "state": "OPEN",
+      "author": "timchown",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Use of stable per prefix addresses.",
+      "createdAt": "2024-10-23T14:14:52Z",
+      "updatedAt": "2024-10-23T14:14:52Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 5,
+      "id": "I_kwDONDdfvc6bfswH",
+      "title": "Flesh out streaming telemetry text",
+      "url": "https://github.com/timchown/address-accountability/issues/5",
+      "state": "OPEN",
+      "author": "timchown",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Chris making a start.",
+      "createdAt": "2024-10-23T14:15:10Z",
+      "updatedAt": "2024-10-23T14:15:10Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 6,
+      "id": "I_kwDONDdfvc6bftA3",
+      "title": "Mention specific IP MIBs",
+      "url": "https://github.com/timchown/address-accountability/issues/6",
+      "state": "OPEN",
+      "author": "timchown",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "This may be in 9099, I think.",
+      "createdAt": "2024-10-23T14:15:33Z",
+      "updatedAt": "2024-10-23T14:15:33Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
   "pulls": [
     {
       "number": 1,
@@ -63,7 +112,7 @@
       "labels": [],
       "body": "This fixes the Markdown file so that everything runs happily in CI. \r\n\r\nYou'll probably want to run `make` in your local environment and then `make fix-lint` before pushing, as that makes sure that everything is cleaned up and happy for the build process. ",
       "createdAt": "2024-10-21T18:26:29Z",
-      "updatedAt": "2024-10-21T18:39:48Z",
+      "updatedAt": "2024-10-22T14:03:05Z",
       "baseRepository": "timchown/address-accountability",
       "baseRefName": "main",
       "baseRefOid": "a5c9ce2771210efa63ac02296134f06d12746a56",
@@ -142,6 +191,89 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDONDdfvc5_d-K-",
+      "title": "Add basic ST info",
+      "url": "https://github.com/timchown/address-accountability/pull/3",
+      "state": "OPEN",
+      "author": "crankynetman",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This is very basic and lacks some meat, but I wanted to at least get a skeleton in place for streaming telemetry style information, as I think that this is probably the Best Way\u00ae to get this data off of a network element.",
+      "createdAt": "2024-10-22T14:02:48Z",
+      "updatedAt": "2024-10-23T14:16:45Z",
+      "baseRepository": "timchown/address-accountability",
+      "baseRefName": "main",
+      "baseRefOid": "54189300a55c3841c32070d341fafa05c32f7250",
+      "headRepository": "timchown/address-accountability",
+      "headRefName": "feat/add-router-streaming",
+      "headRefOid": "98de0b7def0d0304e1df6049576575eeed9545c8",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "dwcarder",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Just so I make sure I get this right, what happens if the central management system thingy reboots or is otherwise starting from a null database.  With this method is there way to get the initial table dump and then get the updates on change after that?",
+          "createdAt": "2024-10-22T14:08:31Z",
+          "updatedAt": "2024-10-22T14:08:31Z"
+        },
+        {
+          "author": "crankynetman",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Just so I make sure I get this right, what happens if the central management system thingy reboots or is otherwise starting from a null database. With this method is there way to get the initial table dump and then get the updates on change after that?\r\n\r\n\u00af\\\\\\_(\u30c4)\\_/\u00af\r\n\r\nAny reasonably well designed database that is ingesting this information would only be adding new entries to it's database and I wouldn't think you'd ever allow the NEs to tell it \"actually, delete all of that stuff I sent before\". I plan on building a lab to test all of this out though. For example I'd really like to know if the NE provides an update when an entry expires, or do you have to infer that based off of configuration? ",
+          "createdAt": "2024-10-22T14:17:20Z",
+          "updatedAt": "2024-10-22T14:17:39Z"
+        },
+        {
+          "author": "dwcarder",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm thinking more about starting from a blank slate.  Do you only get incremental updates and then have no idea if/when you actually have the whole picture?\r\n\r\nAs an example from my SNMP days, on boot we would first do a snmpwalk of the mac address table of a switch.  So then we know we have the whole table in our database.  Then after that we would listen to mac-change notification traps and do incremental updates.  If you were ever worried you were out of sync like if the network element reboots, you could go through that process again.\r\n\r\nSo I'm wondering if in the ST ecosystem if a similar construct applies.",
+          "createdAt": "2024-10-22T14:23:56Z",
+          "updatedAt": "2024-10-22T14:23:56Z"
+        },
+        {
+          "author": "crankynetman",
+          "authorAssociation": "COLLABORATOR",
+          "body": "You could definitely do the same approach, where you pull the whole table first and then only subscribe to updates, definitely nothing stopping you from doing that with gNMI or NETCONF/RESTCONF as far as I can tell. \r\n\r\nI'm loosely of a mind though that there's no need to pull the entire table and then get updates except for perhaps literally the first time you turn it on. It will be good to get hands-on time with this though and see what rakes rear themselves into my face.",
+          "createdAt": "2024-10-22T14:28:04Z",
+          "updatedAt": "2024-10-22T14:28:04Z"
+        },
+        {
+          "author": "dwcarder",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I would guess if such a mechanism exists, we just might want to point it out.  (I'm somewhat unfamiliar w/ ST and friends)\r\n\r\nIt ends up being a really common pattern you see inside many protocols:  RRDP for RPKI, AXFR vs IXFR for DNS, rsync, ...\r\nBasically for any time you need to keep two database things in sync, it's hard.",
+          "createdAt": "2024-10-22T14:36:49Z",
+          "updatedAt": "2024-10-22T14:37:28Z"
+        },
+        {
+          "author": "timchown",
+          "authorAssociation": "OWNER",
+          "body": "Hi,\r\n\r\nThis does seem a nice idea to essentially get the \u201cdiffs\u201d to the state. Certainly worth getting in as a placeholder and fleshing out later.  We can upload a -01 after the meeting.  There\u2019s an issue tracker, feel free to use that to capture these ideas and discussions.\r\n\r\nJeremy\u2019s point about 7217 is also good.\r\n\r\nI\u2019ve stuck 3 issues in as reminders.\r\n\r\nTim\r\n\r\nOn 22/10/2024, 15:37, \"Dale W. Carder\" ***@***.***> wrote:\r\n\r\n\r\nI would guess such a mechanism exists, we might want to point it out. (I'm somewhat unfamiliar w. ST and friends)\r\n\r\nIt ends up being a really common pattern you see inside many protocols: RRDP for RPKI, AXFR vs IXFR for DNS, rsync, ...\r\nBasically for any time you need to keep to database things in sync, it's hard.\r\n\r\n\u2014\r\nReply to this email directly, view it on GitHub<https://github.com/timchown/address-accountability/pull/3#issuecomment-2429468824>, or unsubscribe<https://github.com/notifications/unsubscribe-auth/ABMV24C7WQ2M2ZN4FWS3Q4LZ4ZPJRAVCNFSM6AAAAABQMS2WZSVHI2DSMVQWIX3LMV43OSLTON2WKQ3PNVWWK3TUHMZDIMRZGQ3DQOBSGQ>.\r\nYou are receiving this because you are subscribed to this thread.Message ID: ***@***.***>\r\n",
+          "createdAt": "2024-10-23T14:15:57Z",
+          "updatedAt": "2024-10-23T14:15:57Z"
+        },
+        {
+          "author": "timchown",
+          "authorAssociation": "OWNER",
+          "body": "All sounds good!",
+          "createdAt": "2024-10-23T14:16:23Z",
+          "updatedAt": "2024-10-23T14:16:23Z"
+        },
+        {
+          "author": "timchown",
+          "authorAssociation": "OWNER",
+          "body": "I started creating issues for points we want to capture in -01 and later.",
+          "createdAt": "2024-10-23T14:16:44Z",
+          "updatedAt": "2024-10-23T14:16:44Z"
+        }
+      ],
+      "reviews": []
     }
   ]
 }
