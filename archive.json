@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-10-24T01:17:50.386870+00:00",
+  "timestamp": "2024-10-27T01:23:43.585968+00:00",
   "repo": "timchown/address-accountability",
   "labels": [
     {
@@ -62,9 +62,17 @@
       "labels": [],
       "body": "Use of stable per prefix addresses.",
       "createdAt": "2024-10-23T14:14:52Z",
-      "updatedAt": "2024-10-23T14:14:52Z",
+      "updatedAt": "2024-10-24T14:25:27Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "timchown",
+          "authorAssociation": "OWNER",
+          "body": "Jeremy: \"Can we add a section where if using SLAAC use RFC 7217 \u2013 which forces stable privacy addresses? This way they don\u2019t change as often but are more secure than standard privacy addressing.\"",
+          "createdAt": "2024-10-24T14:25:26Z",
+          "updatedAt": "2024-10-24T14:25:26Z"
+        }
+      ]
     },
     {
       "number": 5,
@@ -94,7 +102,135 @@
       "labels": [],
       "body": "This may be in 9099, I think.",
       "createdAt": "2024-10-23T14:15:33Z",
-      "updatedAt": "2024-10-23T14:15:33Z",
+      "updatedAt": "2024-10-24T14:25:07Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "timchown",
+          "authorAssociation": "OWNER",
+          "body": "Jeremy: \"Also for switch router polling maybe add the specific MIB that would pull this data, which I believe is the IP MIB. Specially when using this MIB you can walk and pull all addresses with their reachable status:\r\nIP-MIB::ipNetToPhysicalState\"",
+          "createdAt": "2024-10-24T14:25:06Z",
+          "updatedAt": "2024-10-24T14:25:06Z"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "id": "I_kwDONDdfvc6brG9c",
+      "title": "Prefix per host clarifications",
+      "url": "https://github.com/timchown/address-accountability/issues/7",
+      "state": "OPEN",
+      "author": "timchown",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "The prefix should be a /64. \r\nMention the why /64 RFC.\r\nNot likely to be /56!",
+      "createdAt": "2024-10-24T14:24:43Z",
+      "updatedAt": "2024-10-24T14:24:43Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 8,
+      "id": "I_kwDONDdfvc6brLHT",
+      "title": "General address accountability",
+      "url": "https://github.com/timchown/address-accountability/issues/8",
+      "state": "OPEN",
+      "author": "timchown",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Add notes about address accountability in general.\r\nIPv4 as well, some approaches IP agnostic.\r\nBut focus is IPv6, for people used to \"IPv4 way of thinking\"",
+      "createdAt": "2024-10-24T14:29:12Z",
+      "updatedAt": "2024-10-24T14:30:33Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "timchown",
+          "authorAssociation": "OWNER",
+          "body": "So 2.2 would be record ARP and ND, if v4.",
+          "createdAt": "2024-10-24T14:30:32Z",
+          "updatedAt": "2024-10-24T14:30:32Z"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "I_kwDONDdfvc6brM5A",
+      "title": "Multiple approaches",
+      "url": "https://github.com/timchown/address-accountability/issues/9",
+      "state": "OPEN",
+      "author": "timchown",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Note that many of these approaches can be used together to tighten assurance.",
+      "createdAt": "2024-10-24T14:31:44Z",
+      "updatedAt": "2024-10-24T14:31:44Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 10,
+      "id": "I_kwDONDdfvc6brOVu",
+      "title": "Section 1 edit",
+      "url": "https://github.com/timchown/address-accountability/issues/10",
+      "state": "OPEN",
+      "author": "timchown",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 1, 3rd paragraph: User tracking needs device inventory or registration information. Maybe rewrite it as; \"...track back an IP address a device, and with device inventory or registration, to a user...\"\r\n",
+      "createdAt": "2024-10-24T14:34:08Z",
+      "updatedAt": "2024-10-24T14:34:08Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 11,
+      "id": "I_kwDONDdfvc6brO7I",
+      "title": "Temporary vs privacy",
+      "url": "https://github.com/timchown/address-accountability/issues/11",
+      "state": "OPEN",
+      "author": "timchown",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 1, 5th paragraph: I think you mean RFC8981 instead of RFC8191. Also, addresses don't provide privacy, but they can be temporary. As a result, RFC8981 changed the title to \"Temporary\u00a0Address.\" I prefer \"Temporary Addresses\" throughout this document instead of Privacy Addresses.\r\n",
+      "createdAt": "2024-10-24T14:35:08Z",
+      "updatedAt": "2024-10-24T14:35:08Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 12,
+      "id": "I_kwDONDdfvc6brP15",
+      "title": "802.1X history",
+      "url": "https://github.com/timchown/address-accountability/issues/12",
+      "state": "OPEN",
+      "author": "timchown",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 2.4 801.x is also typical for enterprise WiFi outside R&E as well\r\nBut it started in R&E",
+      "createdAt": "2024-10-24T14:36:15Z",
+      "updatedAt": "2024-10-24T14:36:15Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 13,
+      "id": "I_kwDONDdfvc6brQtQ",
+      "title": "Additional suggestions from David",
+      "url": "https://github.com/timchown/address-accountability/issues/13",
+      "state": "OPEN",
+      "author": "timchown",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": " In addition to MAC to IP binding, you should discuss;\r\no\u00a0\u00a0\u00a0 User-to-MAC binding, which can be provided by an inventory database, a registration process, or 802.1x.\r\no\u00a0\u00a0\u00a0 Switch Port/AP binding for location, possibly combined with information from a wire plant database. This can be critical information for an Emergency Services request or call\u00a0(i.e., E911 or 999).\r\no\u00a0\u00a0\u00a0 LLDP information can be used to provide additional information about devices attached to switches\r\n\u00a7\u00a0 The host can also use LLDP from the switch or AP to report its location to\u00a0Emergency Services requests or calls.\r\no\u00a0\u00a0\u00a0 Enterprise WiFi systems typically maintain live information about the devices attached, their location (at least which AP they are attached to), MAC address, IP address, etc...\r\n\u00a7\u00a0 High-accuracy location information is also available optionally from some enterprise WiFi systems.\r\no\u00a0\u00a0\u00a0 Maybe\u00a0create a table for the different\u00a0techniques, including the information they can provide.\u00a0",
+      "createdAt": "2024-10-24T14:37:13Z",
+      "updatedAt": "2024-10-24T14:37:13Z",
       "closedAt": null,
       "comments": []
     }
